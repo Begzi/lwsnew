@@ -12,4 +12,12 @@ class Customers extends ActiveRecord
     {
         return 'customers';
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUzs()
+    {
+        return $this->hasMany(Uzs::class, ['customer_id' => 'id']);
+    }
 }

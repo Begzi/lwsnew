@@ -40,8 +40,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?= $form->field($model, 'description')->textInput(['autofocus' => true]) ?>
 
-            <?= $form->field($model, 'uz_list_id')->textInput(['autofocus' => true]) ?>
-
 
 
             <div class="form-group">

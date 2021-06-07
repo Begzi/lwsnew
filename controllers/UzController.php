@@ -33,6 +33,7 @@ class UzController extends Controller
 //                }
 //            }
             $uz->customer_id = $customer_id;
+            $uz->customers->uz_list_id = $uz->id;
             $uz->type_id = $model->type_id;
             $uz->net_id = $model->net_id;
             $uz->support_a = $model->support_a;

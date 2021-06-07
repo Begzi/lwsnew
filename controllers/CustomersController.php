@@ -61,11 +61,12 @@ class CustomersController extends Controller
     }
     public function actionView($id)
     {
-        $customers = Customers::find()->where(['id' => $id])->all();
-        $customer = $customers[0];
+        $customer = Customers::findOne($id);
+//        $customer = $customers[0];
 //        if (Yii::$app->user->identity->username == 'admin') {
 //            Yii::$app->session->setFlash('contactFormSubmitted');
 //        }
-        return $this->render('view', compact('customer' ));
+        $uzs = $customer->uzs;
+        return $this->render('view', compact('customer' , 'uzs'));
     }
 }

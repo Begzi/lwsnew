@@ -12,4 +12,8 @@ class Uzs extends ActiveRecord
     {
         return 'uz_list';
     }
+    public function getCustomers()
+    {
+        return $this->hasOne(Customers::class, ['id' => 'customer_id']);
+    }
 }
