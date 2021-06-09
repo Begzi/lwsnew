@@ -22,6 +22,15 @@ use yii\helpers\Html;
             <h3>type_id: <?php echo $uzs[$i]['type_id'] ?></h3>
             <h4><span>net_id: <?php echo $uzs[$i]['net_id'] ?></span></h4>
             <h4><span>support_a: <?php echo $uzs[$i]['support_a'] ?></span></h4>
+            <?php
+            for ($j = 0; $j < count($certs = $uzs[$i]->cert); $j++):?>
+
+                <span>cert id <?php echo $certs[$j]['id']; ?></span>
+                <span>cert date <?php echo $certs[$j]['ex_date']; ?></span>
+                <span>cert id <?php echo $certs[$j]['num']; ?></span>
+                <p></p>
+
+            <?php endfor; ?>
         </div>
     <?php endfor; ?>
 
@@ -33,14 +42,7 @@ use yii\helpers\Html;
 <!---->
 <!---->
 <!--    --><?php //endif; ?>
-    <?php for ($j = 0; $j < count($cert); $j++):?>
-    <div class="col-md-3">
 
-
-        <h3>num: <?php echo $cert[$j]['id'] ?></h3>
-    </div>
-
-    <?php endfor; ?>
 </div>
 <div class="col-md-12">
     <div class="col-md-3">

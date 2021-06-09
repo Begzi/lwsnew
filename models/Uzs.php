@@ -16,8 +16,9 @@ class Uzs extends ActiveRecord
     {
         return $this->hasOne(Customers::class, ['id' => 'customer_id']);
     }
+
     public function getCert()
     {
-        return $this->hasOne(Cert::class, ['uz_id' => 'id']);
+        return $this->hasMany(Cert::class, ['uz_id' => 'id']);
     }
 }
