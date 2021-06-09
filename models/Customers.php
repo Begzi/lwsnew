@@ -20,4 +20,8 @@ class Customers extends ActiveRecord
     {
         return $this->hasMany(Uzs::class, ['customer_id' => 'id']);
     }
+    public function getCert()
+    {
+        return $this->hasMany(Cert::class, ['customer_id' => 'id']);
+    }
 }

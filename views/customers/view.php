@@ -17,13 +17,14 @@ use yii\helpers\Html;
         </div>
     </div>
     <?php for ($i = 0; $i < count($uzs); $i++):?>
-    <div class="col-md-12">
+        <div class="col-md-12">
 
             <h3>type_id: <?php echo $uzs[$i]['type_id'] ?></h3>
             <h4><span>net_id: <?php echo $uzs[$i]['net_id'] ?></span></h4>
             <h4><span>support_a: <?php echo $uzs[$i]['support_a'] ?></span></h4>
-    </div>
+        </div>
     <?php endfor; ?>
+
     <?php
 //    if (Yii::$customer->session->hasFlash('contactFormSubmitted')): ?>
 <!--        <a href="--><?//= \yii\helpers\Url::to(['/auto/delete','id' => $customer['id']])?><!--" >-->
@@ -32,6 +33,14 @@ use yii\helpers\Html;
 <!---->
 <!---->
 <!--    --><?php //endif; ?>
+    <?php for ($j = 0; $j < count($cert); $j++):?>
+    <div class="col-md-3">
+
+
+        <h3>num: <?php echo $cert[$j]['id'] ?></h3>
+    </div>
+
+    <?php endfor; ?>
 </div>
 <div class="col-md-12">
     <div class="col-md-3">

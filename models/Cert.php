@@ -6,18 +6,19 @@ namespace app\models;
 
 use yii\db\ActiveRecord;
 
-class Uzs extends ActiveRecord
+class Cert extends ActiveRecord
 {
     public static function tableName()
     {
-        return 'uz_list';
+        return 'cert';
     }
-    public function getCustomers()
+    public function getCustomer()
     {
         return $this->hasOne(Customers::class, ['id' => 'customer_id']);
     }
-    public function getCert()
+    public function getUzs()
     {
-        return $this->hasOne(Cert::class, ['uz_id' => 'id']);
+
+        return $this->hasOne(Uzs::class, ['id' => 'uz_id']);
     }
 }
