@@ -23,11 +23,11 @@ use yii\helpers\Html;
             <h4><span>net_id: <?php echo $uzs[$i]['net_id'] ?></span></h4>
             <h4><span>support_a: <?php echo $uzs[$i]['support_a'] ?></span></h4>
             <?php
-            for ($j = 0; $j < count($cert = $uzs[$i]->cert); $j++):?>
+            for ($j = 0; $j < count($certs = $uzs[$i]->cert); $j++):?>
 
-                <span>cert id <?php echo $cert[$j]['id']; ?></span>
-                <span>cert date <?php echo $cert[$j]['ex_date']; ?></span>
-                <span>cert id <?php echo $cert[$j]['num']; ?></span>
+                <span>cert id <?php echo $certs[$j]['id']; ?></span>
+                <span>cert date <?php echo $certs[$j]['ex_date']; ?></span>
+                <span>cert id <?php echo $certs[$j]['num']; ?></span>
             <p></p>
             <?php endfor; ?>
         </div>
