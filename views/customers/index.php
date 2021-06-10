@@ -14,13 +14,7 @@ for ($i = 0; $i < count($customers); $i++)
 use yii\helpers\Html;
 use yii\web\View; ?>
 
-<div class="col-md-12">
-    <div class="col-md-3">
-        <a href="<?= \yii\helpers\Url::to(['/newcert/index'])?>" >
-            SQL SSSSSSSSSSSSSSSS
-        </a>
-    </div>
-</div>
+
 <section class="auto-post-area">
     <div class="conteiner"">
     <div class="col-md-12">
@@ -66,3 +60,4 @@ use yii\web\View; ?>
         </div>
     </div>
 </section>
+<br>

@@ -14,6 +14,11 @@ for ($i = 0; $i < count($customers); $i++)
 use yii\helpers\Html;
 use yii\web\View; ?>
 
+<div class="col-md-3">
+    <a href="<?= \yii\helpers\Url::to(['/newcert/check'])?>" >
+        SQL SSSSSSSSSSSSSSSSddddddddddddddddddddddddd
+    </a>
+</div>
 
 <section class="auto-post-area">
     <div class="conteiner"">
