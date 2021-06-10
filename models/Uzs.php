@@ -21,4 +21,8 @@ class Uzs extends ActiveRecord
     {
         return $this->hasMany(Cert::class, ['uz_id' => 'id']);
     }
+    public function getCertUz()
+    {
+        return $this->hasMany(CertUz::class, ['uz_id' => 'id']);
+    }
 }

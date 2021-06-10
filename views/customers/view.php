@@ -47,7 +47,7 @@ use yii\helpers\Html;
 <div class="col-md-12">
     <div class="col-md-3">
     <a href="<?= \yii\helpers\Url::to(['/uz/add','customer_id' => $customer['id']])?>" >
-        Add
+        SQL SSSSSSSSSSSSSSSS
     </a>
     <div class="form-group">
         <?= Html::submitButton('Add btn', ['class' => 'btn btn-primary', 'name' => 'customers-add-button']) ?>

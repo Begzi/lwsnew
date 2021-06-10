@@ -24,4 +24,8 @@ class Customers extends ActiveRecord
     {
         return $this->hasMany(Cert::class, ['customer_id' => 'id']);
     }
+    public function getNewcert()
+    {
+        return $this->hasMany(NewCert::class, ['customer_id' => 'id']);
+    }
 }
