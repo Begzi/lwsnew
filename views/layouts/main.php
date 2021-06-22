@@ -86,7 +86,13 @@ AppAsset::register($this);
 
         <p class = changed-area2>
             <a href="<?= \yii\helpers\Url::to(['/newcert/check'])?>" >
-                    SQL Изменения данных старых cert uzs в cert_uz
+                SQL Изменения данных старых cert uzs в cert_uz
+            </a>
+        </p>
+        <p class="pull-right"><?= Yii::powered() ?></p>
+        <p class = changed-area2>
+            <a href="<?= \yii\helpers\Url::to(['/newcert/katya'])?>" >
+                asdasdasdsads
             </a>
         </p>
         <p class="pull-right"><?= Yii::powered() ?></p>

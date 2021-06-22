@@ -3,16 +3,34 @@
 /* @var $this yii\web\View */
 
 
+use yii\helpers\Html;
+use yii\web\View;
 $this->title = 'Customers';
 
 for ($i = 0; $i < count($customers); $i++)
 {
-    echo $customers[$i]['id'];
+    if ($customers[$i]['id'] == '126')
+    {
+
+        echo $customers[$i]['id'];
+        echo " ";
+        echo $customers[$i]['fullname'];
+        echo " ";
+        echo $customers[$i]['shortname'];
+        echo " ";
+        echo $customers[$i]['address'];
+        echo " ";
+        echo $customers[$i]['uz_list_id'];
+        echo " ";
+        echo $customers[$i]['com_id'];
+        echo " ";
+        echo $customers[$i]['description'];
+        echo " ";
+
+    }
 
 }
-
-use yii\helpers\Html;
-use yii\web\View; ?>
+ ?>
 
 
 <section class="auto-post-area">

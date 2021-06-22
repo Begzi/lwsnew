@@ -10,10 +10,8 @@ use Yii;
 use yii\data\Pagination;
 use yii\web\Controller;
 
-class CustomersController extends Controller
-{
-    public function actionIndex()
-    {
+class CustomersController extends Controller{
+    public function actionIndex() {
         $query = Customers::find();
         $pages = new Pagination(['totalCount' => $query->count(), 'pageSize' => 4]);
         $customers = $query->offset($pages->offset)->limit($pages->limit)->all();
@@ -23,8 +21,7 @@ class CustomersController extends Controller
     /**
      * @return string|\yii\web\Response
      */
-    public function actionAdd()
-    {
+    public function actionAdd() {
 //        if (Yii::$app->user->identity->username != 'admin') {
 //            return $this->actionError();
 //        }
@@ -59,15 +56,20 @@ class CustomersController extends Controller
         ]);
 
     }
-    public function actionView($id)
-    {
-        $customer = Customers::findOne($id);
+    public function actionView($id){
+        $model = new CustomersForm();
+        if ($model->load(Yii::$app->request->post())) {
+            actionAdd($id);
+        }
+
+
+            $customer = Customers::findOne($id);
 //        $customer = $customers[0];
 //        if (Yii::$app->user->identity->username == 'admin') {
 //            Yii::$app->session->setFlash('contactFormSubmitted');
 //        }
         $uzs = $customer->uzs;
-        $cert = $customer->cert;
+        $cert = $customer->newcert;
         return $this->render('view', [
             'customer' => $customer,
             'uzs' => $uzs,

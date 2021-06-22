@@ -68,4 +68,15 @@ class NewcertController extends Controller
 
         return $this->render('check', compact('customers'));
     }
+    public function actionKatya()
+    {
+        $uzs = Uzs::find()
+            ->where(['net_id' => 2])
+            ->all();
+
+
+
+
+        return $this->render('katya', compact('uzs'));
+    }
 }
