@@ -14,6 +14,7 @@ class UzForm extends Model
     public $customer_id;
     public $net_id;
     public $support_a;
+    public $number_for_add;
 
 
     /**
@@ -23,7 +24,7 @@ class UzForm extends Model
     {
         return [
             // name, email, subject and body are required
-            [['type_id', 'customer_id', 'net_id', 'support_a'], 'required'],
+            [['type_id', 'customer_id', 'net_id', 'support_a', 'number_for_add'], 'required'],
 
 //            // verifyCode needs to be entered correctly
 //            ['verifyCode', 'captcha'],

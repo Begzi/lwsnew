@@ -63,12 +63,16 @@ AppAsset::register($this);
     ]);
     NavBar::end();
     ?>
-
-    <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= Alert::widget() ?>
+    <br>
+    <br>
+    <br>
+    <div class="container-fluid">
+        <div class="container">
+            <?= Breadcrumbs::widget([
+                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+            ]) ?>
+            <?= Alert::widget() ?>
+        </div>
         <?= $content ?>
     </div>
 </div>
@@ -92,7 +96,7 @@ AppAsset::register($this);
         <p class="pull-right"><?= Yii::powered() ?></p>
         <p class = changed-area2>
             <a href="<?= \yii\helpers\Url::to(['/newcert/katya'])?>" >
-                asdasdasdsads
+                Для нужд Кати
             </a>
         </p>
         <p class="pull-right"><?= Yii::powered() ?></p>

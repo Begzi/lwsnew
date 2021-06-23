@@ -13,7 +13,7 @@ use yii\web\Controller;
 class CustomersController extends Controller{
     public function actionIndex() {
         $query = Customers::find();
-        $pages = new Pagination(['totalCount' => $query->count(), 'pageSize' => 4]);
+        $pages = new Pagination(['totalCount' => $query->count(), 'pageSize' => 15]);
         $customers = $query->offset($pages->offset)->limit($pages->limit)->all();
         return $this->render('index', compact('customers', 'pages'));
     }
@@ -47,9 +47,11 @@ class CustomersController extends Controller{
             $cumstomer->description = $model->description;
             $cumstomer->save();
 
+            $query = Customers::find()->where(['fullname' => $model->fullname])->all();
 
-
-            return $this->refresh();
+            return $this->render('view', [
+                'id' => $query[0]['id'],
+            ]);
         }
         return $this->render('add', [
             'model' => $model,
@@ -57,13 +59,11 @@ class CustomersController extends Controller{
 
     }
     public function actionView($id){
-        $model = new CustomersForm();
-        if ($model->load(Yii::$app->request->post())) {
-            actionAdd($id);
-        }
 
 
-            $customer = Customers::findOne($id);
+
+
+        $customer = Customers::findOne($id);
 //        $customer = $customers[0];
 //        if (Yii::$app->user->identity->username == 'admin') {
 //            Yii::$app->session->setFlash('contactFormSubmitted');
@@ -76,5 +76,12 @@ class CustomersController extends Controller{
             'cert' => $cert,
 
             ]);
+    }
+    public function customer_description_edit_open(){
+
+    }
+
+    public function customer_description_edit_cancel(){
+
     }
 }

@@ -4,6 +4,7 @@
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model app\models\ContactForm */
 
+use app\models\ContactForm;
 use yii\web\View;
 use app\models\CastomersForm;
 use yii\bootstrap\Modal;
@@ -38,8 +39,6 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= $form->field($model, 'net_id')->textInput(['autofocus' => true])  ?>
 
             <?= $form->field($model, 'support_a')->textInput(['autofocus' => true]) ?>
-
-            <?php $model->number_for_add = 1 ?>
 
 
 
