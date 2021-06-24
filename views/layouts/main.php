@@ -80,25 +80,7 @@ AppAsset::register($this);
 <footer class="footer">
     <div class="container">
         <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
-        <p class = changed-area1>
-             <a href="<?= \yii\helpers\Url::to(['/newcert/index'])?>" >
-                    SQL Изменения данных старых cert в newcert
-             </a>
-        </p>
 
-
-
-        <p class = changed-area2>
-            <a href="<?= \yii\helpers\Url::to(['/newcert/check'])?>" >
-                SQL Изменения данных старых cert uzs в cert_uz
-            </a>
-        </p>
-        <p class="pull-right"><?= Yii::powered() ?></p>
-        <p class = changed-area2>
-            <a href="<?= \yii\helpers\Url::to(['/newcert/katya'])?>" >
-                Для нужд Кати
-            </a>
-        </p>
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>
 </footer>

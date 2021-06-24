@@ -5,7 +5,7 @@
 /* @var $model app\models\ContactForm */
 
 use yii\web\View;
-use app\models\CastomersForm;
+use app\models\UzsForm;
 use yii\bootstrap\Modal;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
@@ -26,7 +26,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php endif; ?>
 
-    <?= Html::button('Нажми меня!', ['class' => 'btn btn-primary', 'url'=> 'index']) ?>
     <div class="row">
         <div class="col-lg-5">
 
@@ -58,7 +57,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 
-?>
 
 <!--            <div class="form-group">-->
 <!--                --><?//= Html::submitButton('Add btn', ['class' => 'btn btn-primary', 'name' => 'customers-add-button']) ?>

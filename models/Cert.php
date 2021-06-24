@@ -16,10 +16,10 @@ class Cert extends ActiveRecord
     {
         return $this->hasOne(Customers::class, ['id' => 'customer_id']);
     }
-    public function getUzs()
+    public function getCertuz()
     {
 
-        return $this->hasOne(Uzs::class, ['id' => 'uz_id']);
+        return $this->hasMany(CertUz::class, ['cert_id' => 'id']);
     }
 
 

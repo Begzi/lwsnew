@@ -40,6 +40,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?= $form->field($model, 'support_a')->textInput(['autofocus' => true]) ?>
 
+            <?= $form->field($model, 'number_for_add')->textInput(['autofocus' => true]) ?>
+
 
 
 

@@ -77,13 +77,13 @@ use yii\helpers\Url;
                 <?php
                 for ($j = 0; $j < count($certuzs); $j++):?>
                     <?php
-                    $newcert = $certuzs[$j]->newcert;
+                    $cert = $certuzs[$j]->cert;
                     echo $certuzs;
                     ?>
 
-                    <span>cert id <?php echo $newcert['id']; ?></span>
-                    <span>cert date <?php echo $newcert['ex_date']; ?></span>
-                    <span>cert id <?php echo $newcert['num']; ?></span>
+                    <span>cert id <?php echo $cert['id']; ?></span>
+                    <span>cert date <?php echo $cert['ex_date']; ?></span>
+                    <span>cert id <?php echo $cert['num']; ?></span>
                     <p></p>
 
                 <?php endfor; ?>
@@ -113,6 +113,11 @@ use yii\helpers\Url;
         </div>
 
         <?= Html::a('Добавить узел', ['/uz/add', 'customer_id' => $customer['id']], ['class'=>'btn btn-primary']) ?>
+
+        <?= Html::a('Добавить много узлов', ['/uz/manyadd', 'customer_id' => $customer['id']], ['class'=>'btn btn-primary']) ?>
+
+
+        <?= Html::a('Добавить сертификаь', ['/cert/add', 'customer_id' => $customer['id']], ['class'=>'btn btn-primary']) ?>
 
         <?php
 

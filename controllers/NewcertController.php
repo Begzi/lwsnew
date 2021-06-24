@@ -74,9 +74,28 @@ class NewcertController extends Controller
             ->where(['net_id' => 2])
             ->all();
 
-
-
-
         return $this->render('katya', compact('uzs'));
+    }
+
+    public function actionKonstantin()
+    {
+        $customer = Customers::find()
+            ->all();
+        $check1='Красноярск,';
+        $check2='Красноярск ';
+        $check3='Красноярск.';
+        $uzs = array();
+        for ($i=0; $i < count($customer); $i++){
+
+            $pos1 = strripos($customer[$i]->address, $check1);
+            $pos2 = strripos($customer[$i]->address, $check2);
+            $pos3 = strripos($customer[$i]->address, $check3);
+
+            if ($pos1 === true or $pos2 === true or $pos3 === true ){
+                array_merge($uzs, $customer->uzs);
+            }
+
+        }
+        return $this->render('konstantin', compact('uzs', 'customer'));
     }
 }
