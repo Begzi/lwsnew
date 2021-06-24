@@ -17,8 +17,13 @@ class CertUz extends ActiveRecord
         return $this->hasOne(NewCert::class, ['id' => 'cert_id']);
     }
 
+    public function getCert()
+    {
+        return $this->hasOne(Cert::class, ['id' => 'cert_id']);
+    }
+
     public function getUzs()
     {
-        return $this->hasOne(Cert::class, ['id' => 'uz_id']);
+        return $this->hasOne(Uzs::class, ['id' => 'uz_id']);
     }
 }

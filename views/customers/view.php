@@ -77,7 +77,7 @@ use yii\helpers\Url;
                 <?php
                 for ($j = 0; $j < count($certuzs); $j++):?>
                     <?php
-                    $newcert = $certuzs[$j]->newcert;
+                    $newcert = $certuzs[$j]->cert;
                     echo $certuzs;
                     ?>
 

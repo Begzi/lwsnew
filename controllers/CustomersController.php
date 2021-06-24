@@ -69,7 +69,7 @@ class CustomersController extends Controller{
 //            Yii::$app->session->setFlash('contactFormSubmitted');
 //        }
         $uzs = $customer->uzs;
-        $cert = $customer->newcert;
+        $cert = $customer->cert;
         return $this->render('view', [
             'customer' => $customer,
             'uzs' => $uzs,
