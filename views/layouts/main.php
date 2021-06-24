@@ -40,7 +40,7 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-left'],
         'items' => [
             ['label' => 'Главная', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
+            ['label' => 'Задания От начальства', 'url' => ['/site/about']],
             ['label' => 'Contact', 'url' => ['/site/contact']],
         ],
     ]);

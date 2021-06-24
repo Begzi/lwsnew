@@ -31,7 +31,24 @@ for ($i=0; $i < count($customer); $i++){
 
     }
 
-}?>
+}
+$k = 0;
+for ($j = 1; $j < 18; $j++){
+    for ($i=0; $i < count($uzs); $i++) {
+        if ($uzs[$i]->type_id == $j){
+            $k = $k + 1;
+        }
+        if ($k == 1 and $uzs[$i]->type_id == $j){
+            echo $uzs[$i]->uztype[0]->name;
+        }
+    }
+    echo " Всего: ";
+    echo $k;
+    echo '<br>';
+    $k = 0;
+}
+
+?>
 <br>
 <?php
 echo count($uzs);
@@ -42,13 +59,6 @@ echo count($uzs);
     <div class="conteiner"">
     <div class="col-md-12">
 
-        <a href="<?= \yii\helpers\Url::to(['/customers/add'])?>" >
-            Add
-        </a>
-        <div class="form-group">
-            <?= Html::submitButton('Add btn', ['class' => 'btn btn-primary', 'name' => 'customers-add-button']) ?>
-            <!--ХЗ КАК РАБОТАЕТ ЭТА ЧЁРТОВА КНОПК!-->
-        </div>
     </div>
     <div class="col-md-12">
         <!--        <div class="" float="left">-->
@@ -70,6 +80,8 @@ echo count($uzs);
                 <h3><a href="<?= \yii\helpers\Url::to(['/customers/view','id' => $uzs[$i]->customers['id']])?>"><?php echo $uzs[$i]->customers['fullname'] ?></a></h3>
 
                 <h3><p> <?php echo $uzs[$i]->customers['shortname'] ?></p></h3>
+
+                <h3><p> <?php echo $uzs[$i]->uztype[0]->name ?></p></h3>
             </div>
         </div>
     <?php endfor; ?>
