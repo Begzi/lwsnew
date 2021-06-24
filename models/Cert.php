@@ -19,7 +19,7 @@ class Cert extends ActiveRecord
     public function getCertuz()
     {
 
-        return $this->hasMany(CertUz::class, ['cert_id' => 'id']);
+        return $this->hasOne(CertUz::class, ['cert_id' => 'id']);
     }
 
 

@@ -9,14 +9,11 @@ $this->title = 'Customers';
 use yii\helpers\Html;
 use yii\web\View;
 
-for ($i = 0; $i < count($customer); $i++){
-    echo $customer[$i]->address;
-}?>
+?>
 <br>
 <br>
 <br>
 <?php
-echo count($customer);
 
 $uzs = array();
 $check1='Красноярск,';
@@ -29,12 +26,15 @@ for ($i=0; $i < count($customer); $i++){
     $pos3 = strripos($customer[$i]->address, $check3);
 
     if ($pos1 === FALSE or $pos2 === FALSE or $pos3 === FALSE ){
-        array_merge($uzs, $customer->uzs);
 
-        echo 1;
+        $uzs = array_merge($uzs, $customer[$i]->uzs);
+
     }
 
-}
+}?>
+<br>
+<?php
+echo count($uzs);
 ?>
 
 
@@ -56,7 +56,10 @@ for ($i=0; $i < count($customer); $i++){
         <!--        </div>-->
         <!--        <div class="" float="right" >-->
         <span class="inline-2">Краткое наименование учреждения</span>
-
+        <h3><span class="inline-2">Всего узлов: </span><?php
+            echo count($uzs);
+            ?>
+        </h3>
         <!--        </div>-->
     </div>
     <!--        <div class="col-md-12">-->
