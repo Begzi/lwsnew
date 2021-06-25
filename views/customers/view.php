@@ -2,20 +2,16 @@
 $this->title = 'Customer';
 $this->params['breadcrumbs'][] = $this->title;
 
-use app\helpers\TextHelper;
-use yii\bootstrap\Button;
 use yii\bootstrap\ButtonDropdown;
-use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use yii\helpers\Url;
 
 //Лучше тут и индиекса кидать сам обьект, а не тольно её ИД и искать её в action
 
 
 
 ?>
-<div class="container-fluid">
-    <div class="row"  style="padding: 5px;">
+<div class="container-fluid col-lg-12">
+    <div class="row"  >
         <div class="col-xs-6">
             <div class="panel panel-default">
                 <div class="panel-heading">Полное наименование учреждения</div>
@@ -38,83 +34,64 @@ use yii\helpers\Url;
             </div>
         </div>
     </div>
-        <div class="row" style="padding: 5px;">
-            <div class="col-xs-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Адресс</div>
-                        <div class="panel-body">
-                            <div class="normal_mode_labels">
+    <div class="row" >
+        <div class="col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Адресс</div>
+                     <div class="panel-body">
+                          <div class="normal_mode_labels">
                                 <h4><span>Address: <?php echo $customer['address'] ?></span></h4>
-                            </div>
-                        </div>
-                </div>
+                          </div>
+                     </div>
+
             </div>
         </div>
     </div>
 
 
-    <div class="col-xs-12">
-        <div class="row" style="padding: 5px;">
-            <div class="col-xs-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Узлы</div>
+    <div class="row" >
+        <div class="col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Узлы</div>
                     <div class="panel-body">
                         <div class="normal_mode_labels">
-
                             <button class="accordion">Section 1</button>
                             <div class="panel">
-
         <?php
         if ($uzs != NULL):?>
-
-
-        <?php for ($i = 0; $i < count($uzs); $i++):?>
-            <div class="col-xs-12">
-                <?php
-                $certuzs = $uzs[$i]->certuz;
-                ?>
-
-                <h3>type_id: <?php echo $uzs[$i]['type_id'] ?></h3>
-                <h4><span>net_id: <?php echo $uzs[$i]['net_id'] ?></span></h4>
-                <h4><span>support_a: <?php echo $uzs[$i]['support_a'] ?></span></h4>
-                <?php
-                for ($j = 0; $j < count($certuzs); $j++):?>
+            <?php for ($i = 0; $i < count($uzs); $i++):?>
+                <div class="col-xs-12">
                     <?php
-                    $cert = $certuzs[$j]->cert;
-                    echo $certuzs;
+                    $certuzs = $uzs[$i]->certuz;
                     ?>
 
-                    <span>cert id <?php echo $cert['id']; ?></span>
-                    <span>cert date <?php echo $cert['ex_date']; ?></span>
-                    <span>cert id <?php echo $cert['num']; ?></span>
-                    <p></p>
+                    <h3>type_id: <?php echo $uzs[$i]['type_id'] ?></h3>
+                    <h4><span>net_id: <?php echo $uzs[$i]['net_id'] ?></span></h4>
+                    <h4><span>support_a: <?php echo $uzs[$i]['support_a'] ?></span></h4>
+                    <?php
+                    for ($j = 0; $j < count($certuzs); $j++):?>
+                        <?php
+                        $cert = $certuzs[$j]->cert;
+                        echo $certuzs;
+                        ?>
 
-                <?php endfor; ?>
-            </div>
-        <?php endfor;
-        endif;?>
+                        <span>cert id <?php echo $cert['id']; ?></span>
+                        <span>cert date <?php echo $cert['ex_date']; ?></span>
+                        <span>cert id <?php echo $cert['num']; ?></span>
+                        <p></p>
 
-        <?php
-    //    if (Yii::$customer->session->hasFlash('contactFormSubmitted')): ?>
-    <!--        <a href="--><?//= \yii\helpers\Url::to(['/auto/delete','id' => $customer['id']])?><!--" >-->
-    <!--            Delete this auto-->
-    <!--        </a>-->
-    <!---->
-    <!---->
-    <!--    --><?php //endif; ?>
-                            </div>
-
-                        </div>
-                    </div>
+                    <?php endfor; ?>
                 </div>
+            <?php endfor;
+        endif;?>
+                       </div>
+                   </div>
+               </div>
             </div>
         </div>
-
     </div>
-    <div class="col-xs-12">
-        <div class="col-xs-3">
 
-        </div>
+    <div class="col-xs-12">
 
         <?= Html::a('Добавить узел', ['/uz/add', 'customer_id' => $customer['id']], ['class'=>'btn btn-primary']) ?>
 
@@ -148,27 +125,7 @@ use yii\helpers\Url;
     <p>Lorem ipsum...</p>
 </div>
 
-<script>
-    var acc = document.getElementsByClassName("accordion");
-    var i;
 
-    for (i = 0; i < acc.length; i++) {
-        acc[i].addEventListener("click", function() {
-            /* Toggle between adding and removing the "active" class,
-            to highlight the button that controls the panel */
-            this.classList.toggle("active");
-
-            /* Toggle between hiding and showing the active panel */
-            var panel = this.nextElementSibling;
-            if (panel.style.display === "block") {
-                panel.style.display = "none";
-            } else {
-                panel.style.display = "block";
-            }
-        });
-    }
-
-</script>
 
 
 
@@ -216,3 +173,26 @@ use yii\helpers\Url;
         </div>
     </div>
 </div>
+
+
+<script>
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+
+    for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function() {
+            /* Toggle between adding and removing the "active" class,
+            to highlight the button that controls the panel */
+            this.classList.toggle("active");
+
+            /* Toggle between hiding and showing the active panel */
+            var panel = this.nextElementSibling;
+            if (panel.style.display === "block") {
+                panel.style.display = "none";
+            } else {
+                panel.style.display = "block";
+            }
+        });
+    }
+
+</script>
