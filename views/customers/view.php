@@ -13,38 +13,22 @@ use yii\helpers\Html;
 <div class="container-fluid col-lg-12">
     <div class="row"  >
         <div class="col-xs-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">Полное наименование учреждения</div>
-                    <div class="panel-body">
-                        <div class="normal_mode_labels">
+
                             <h3><?php echo $customer['fullname'] ?></h3>
-                        </div>
-                    </div>
-            </div>
+
         </div>
 
         <div class="col-xs-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">Краткое наименование учреждения</div>
-                    <div class="panel-body">
-                        <div class="normal_mode_labels">
+
                             <h3> <?php echo $customer['shortname'] ?></h3>
-                        </div>
-                    </div>
-            </div>
+
         </div>
     </div>
     <div class="row" >
         <div class="col-xs-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">Адресс</div>
-                     <div class="panel-body">
-                          <div class="normal_mode_labels">
-                                <h4><span>Address: <?php echo $customer['address'] ?></span></h4>
-                          </div>
-                     </div>
 
-            </div>
+                                <h4><span>Address: <?php echo $customer['address'] ?></span></h4>
+
         </div>
     </div>
 
@@ -130,9 +114,7 @@ use yii\helpers\Html;
 
 
     <div class="container-fluid col-lg-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">Примечания
-                <div class="pull-right">
+
                     <!-------<div class="customers_description_edit_mode" hidden>
                         <button type="button" class="btn btn-xs" OnClick="customer_description_edit_save();" title = "Сохранить"><span class="glyphicon glyphicon-ok"></span></button>
                         <button type="button" class="btn btn-xs" OnClick="customer_description_edit_cancel();" title = "Отменить"><span class="glyphicon glyphicon-remove"></span></button>
@@ -153,10 +135,8 @@ use yii\helpers\Html;
                         <span><?= Html::a('<button class="btn btn-primary">Update &nbsp;<i class="glyphicon glyphicon-pencil"></i></button>',
                                 ['/uz/add', 'customer_id' => $customer['id']], ['class'=>'btn btn-xs']) ?>
                        </span>
-                    </div>
-                </div>
-            </div>
-            <div class="panel-body">
+
+            
                 <div class="customers_description_show_mode">
                     <p type="text" id="customer_description">
                         <?
@@ -169,8 +149,6 @@ use yii\helpers\Html;
                         ?>
                     </p>
                 </div>
-            </div>
-        </div>
     </div>
 </div>
 
