@@ -16,6 +16,8 @@ class CertForm extends Model
     public $sc_link;
     public $scan_file_format;
     public $number_for_add_uzs;
+    public $check_box = array();
+    public $serv1;
 
 
     /**
@@ -25,7 +27,7 @@ class CertForm extends Model
     {
         return [
             // name, email, subject and body are required
-            [['num', 'customer_id', 'st_date', 'ex_date', 'uz_id', '$sc_link','scan_file_format','number_for_add_uzs'], 'required'],
+            [['num', 'serv1', '$$check_box', 'customer_id', 'st_date', 'ex_date', 'uz_id', '$sc_link','scan_file_format','number_for_add_uzs'], 'required'],
 
 //            // verifyCode needs to be entered correctly
 //            ['verifyCode', 'captcha'],

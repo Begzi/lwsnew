@@ -5,6 +5,7 @@ namespace app\controllers;
 
 
 use app\models\CertForm;
+use app\models\Uzs;
 use Yii;
 use yii\web\Controller;
 
@@ -35,9 +36,15 @@ class CertController extends Controller
 
             $this->redirect(array('customers/view', 'id'=>$customer_id));
         }
+        $uzs =  Uzs::find()->where(['customer_id' => $customer_id])->all();
+//        $uzs = $customer_id->uzs;
+        for ($i = 0; $i < count($uzs); $i++){
+            array_push($model->check_box, $uzs[$i]);
+        }
         return $this->render('add', [
             'model' => $model,
             'customer_id' => $customer_id,
+            'uzs' => $uzs,
         ]);
     }
 

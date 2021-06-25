@@ -69,7 +69,7 @@ AppAsset::register($this);
     <br>
     <br>
     <br>
-    <div class="container" id="parent_conteiner" style="padding: 5px;">
+    <div class="container-fluid" id="parent_conteiner" style="padding: 5px;">
         <div class="container">
             <?= Breadcrumbs::widget([
                 'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],

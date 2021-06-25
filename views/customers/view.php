@@ -10,8 +10,8 @@ use yii\helpers\Html;
 
 
 ?>
-<div class="container-fluid col-lg-12">
-    <div class="row"  >
+<div class="container-fluid">
+    <div class="row">
         <div class="col-xs-6">
 
                             <h3><?php echo $customer['fullname'] ?></h3>
@@ -35,11 +35,9 @@ use yii\helpers\Html;
 
     <div class="row" >
         <div class="col-xs-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">Узлы</div>
-                    <div class="panel-body">
+
                         <div class="normal_mode_labels">
-                            <button class="accordion">Section 1</button>
+                            <button class="accordion">Узлов <?php echo count($uzs);?> </button>
                             <div class="panel">
         <?php
         if ($uzs != NULL):?>
@@ -70,8 +68,6 @@ use yii\helpers\Html;
         endif;?>
                        </div>
                    </div>
-               </div>
-            </div>
         </div>
     </div>
 
