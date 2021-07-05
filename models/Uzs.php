@@ -27,6 +27,10 @@ class Uzs extends ActiveRecord
     }
     public function getUztype()
     {
-        return $this->hasMany(UzType::class, ['id' => 'type_id']);
+        return $this->hasOne(UzType::class, ['id' => 'type_id']);
+    }
+    public function getUznet()
+    {
+        return $this->hasOne(UzNet::class, ['id' => 'net_id']);
     }
 }

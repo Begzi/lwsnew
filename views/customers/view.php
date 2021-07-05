@@ -12,44 +12,86 @@ use yii\helpers\Html;
 ?>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-xs-6">
+        <div class="col-xs-8">
+            <div class="col-xs-12">
 
-                            <h3><?php echo $customer['fullname'] ?></h3>
+                                <h3><?php echo $customer['fullname'] ?></h3>
+
+            </div>
+
+            <div class="col-xs-12">
+
+                                <h4> <?php echo $customer['shortname'] ?></h4>
+
+            </div>
 
         </div>
+        <div class="col-xs-4">
+            <div class="col-xs-12">
+                <?= Html::a('Журнал обращений', ['/uz/add', 'customer_id' => $customer['id']], ['class'=>'btn btn-primary']) ?>
+                <?= Html::a('Создать обращение', ['/uz/add', 'customer_id' => $customer['id']], ['class'=>'btn btn-primary']) ?>
 
-        <div class="col-xs-6">
+            </div>
+            <br>
+            <br>
+            <div class="col-xs-12">
+                <?= Html::a('Схема сети учреждения', ['/uz/add', 'customer_id' => $customer['id']], ['class'=>'btn btn-primary']) ?>
 
-                            <h3> <?php echo $customer['shortname'] ?></h3>
-
+            </div>
         </div>
     </div>
     <div class="row" >
         <div class="col-xs-12">
+            <div class="col-xs-12">
 
-                                <h4><span>Address: <?php echo $customer['address'] ?></span></h4>
+                                <h4><span>Юридический адресс: <?php echo $customer['address'] ?></span></h4>
 
+            </div>
         </div>
     </div>
 
+    <div class="col-xs-12">
 
+        <?= Html::a('Добавить узел', ['/uz/add', 'customer_id' => $customer['id']], ['class'=>'btn btn-primary']) ?>
+
+        <?= Html::a('Добавить много узлов', ['/uz/manyadd', 'customer_id' => $customer['id']], ['class'=>'btn btn-primary']) ?>
+
+
+        <?= Html::a('Добавить сертификат', ['/cert/add', 'customer_id' => $customer['id']], ['class'=>'btn btn-primary']) ?>
+
+        <?php
+
+        echo ButtonDropdown::widget([
+            'label' => 'Action',
+            'dropdown' => [
+                'items' => [
+                    ['label' => 'DropdownA', 'url' => '/'],
+                    ['label' => 'DropdownB', 'url' => '#'],
+                ],
+            ],
+        ]);
+        ?>
+
+    </div>
+<?php if ($realuzs != NULL):?>
+<?php for ($k = 0; $k < count($realuzs); $k++):?>
     <div class="row" >
         <div class="col-xs-12">
 
                         <div class="normal_mode_labels">
-                            <button class="accordion">Узлов <?php echo count($uzs);?> </button>
+                            <button class="accordion">Узлов <?php echo count($realuzs[$k]) .' '.
+                                    $realuzs[$k][0]->uztype->name;?> </button>
                             <div class="panel">
-        <?php
-        if ($uzs != NULL):?>
-            <?php for ($i = 0; $i < count($uzs); $i++):?>
+
+            <?php for ($i = 0; $i < count($realuzs[$k]); $i++):?>
                 <div class="col-xs-12">
                     <?php
-                    $certuzs = $uzs[$i]->certuz;
+                    $certuzs = $realuzs[$k][$i]->certuz;
                     ?>
 
-                    <h3>type_id: <?php echo $uzs[$i]['type_id'] ?></h3>
-                    <h4><span>net_id: <?php echo $uzs[$i]['net_id'] ?></span></h4>
-                    <h4><span>support_a: <?php echo $uzs[$i]['support_a'] ?></span></h4>
+                    <h3>type_id: <?php echo $realuzs[$k][$i]->uztype->name ?></h3>
+                    <h4><span>net_id: <?php echo $realuzs[$k][$i]->uznet->num ?></span></h4>
+                    <h4><span>support_a: <?php echo $realuzs[$k][$i]['support_a'] ?></span></h4>
                     <?php
                     for ($j = 0; $j < count($certuzs); $j++):?>
                         <?php
@@ -64,47 +106,14 @@ use yii\helpers\Html;
 
                     <?php endfor; ?>
                 </div>
-            <?php endfor;
-        endif;?>
+            <?php endfor;?>
                        </div>
                    </div>
         </div>
     </div>
 
-    <div class="col-xs-12">
-
-        <?= Html::a('Добавить узел', ['/uz/add', 'customer_id' => $customer['id']], ['class'=>'btn btn-primary']) ?>
-
-        <?= Html::a('Добавить много узлов', ['/uz/manyadd', 'customer_id' => $customer['id']], ['class'=>'btn btn-primary']) ?>
-
-
-        <?= Html::a('Добавить сертификаь', ['/cert/add', 'customer_id' => $customer['id']], ['class'=>'btn btn-primary']) ?>
-
-        <?php
-
-        echo ButtonDropdown::widget([
-        'label' => 'Action',
-        'dropdown' => [
-        'items' => [
-        ['label' => 'DropdownA', 'url' => '/'],
-        ['label' => 'DropdownB', 'url' => '#'],
-        ],
-        ],
-        ]);
-    ?>
-
-    </div>
-
-<button class="accordion">Section 2</button>
-<div class="panel">
-    <p>Lorem ipsum...</p>
-</div>
-
-<button class="accordion">Section 3</button>
-<div class="panel">
-    <p>Lorem ipsum...</p>
-</div>
-
+<?php endfor;
+endif;?>
 
 
 

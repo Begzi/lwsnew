@@ -6,6 +6,7 @@ namespace app\controllers;
 
 use app\models\Customers;
 use app\models\CustomersForm;
+use phpDocumentor\Reflection\Types\Array_;
 use Yii;
 use yii\data\Pagination;
 use yii\web\Controller;
@@ -59,7 +60,11 @@ class CustomersController extends Controller{
 
     }
     public function actionView($id){
-
+        function build_sorter($key) {
+            return function ($a, $b) use ($key) {
+                return strnatcmp($a[$key], $b[$key]);
+            };
+        }
 
 
 
@@ -70,13 +75,38 @@ class CustomersController extends Controller{
 //        }
         $uzs = $customer->uzs;
         $cert = $customer->cert;
+        usort($uzs, build_sorter('type_id'));
+        $tmp= [];
+        $realuzs= [];
+        $k=0;
+        for ($i=0; $i < count($uzs); $i++){
+            if (empty($tmp)){
+                array_push($tmp,$uzs[$i]);
+            }
+            else{
+                if ($uzs[$i]->type_id == $tmp[$k]->type_id){
+                    array_push($tmp,$uzs[$i]);
+                    $k++;
+                }
+                else{
+                    array_push($realuzs,$tmp);
+                    $tmp=[];
+                    $k=0;
+                    $i=$i-1;
+                }
+
+            }
+        }
+        array_push($realuzs,$tmp);
         return $this->render('view', [
             'customer' => $customer,
             'uzs' => $uzs,
+            'realuzs' => $realuzs,
             'cert' => $cert,
 
             ]);
     }
+
     public function customer_description_edit_open(){
 
     }

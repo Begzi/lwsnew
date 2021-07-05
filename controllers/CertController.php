@@ -4,7 +4,9 @@
 namespace app\controllers;
 
 
+use app\models\Cert;
 use app\models\CertForm;
+use app\models\CertUz;
 use app\models\Uzs;
 use Yii;
 use yii\web\Controller;
@@ -18,28 +20,50 @@ class CertController extends Controller
 //        }
         $model = new CertForm();
         if ($model->load(Yii::$app->request->post())) {
-
-            Yii::$app->session->setFlash('uzlistFormSubmitted');
-//            $customers = Customers::find()->all();
-            $uz = new Cert();
-//            for ($i = 0; $i < count($customers); $i++) {
-//                if ($customers[$i]['name'] == $model->name && $customers[$i]['brand'] == $model->brand) {
-//                    $cumstomer->number = $customers[$i]['number'] + 1;
-//                    $cumstomer->name = $customers[$i]['name'];
-//                    $cumstomer->brand = $customers[$i]['brand'];
-//                    $cumstomer[$i]->delete();
-//                    $cumstomer->save();
-//                    return $this->refresh();
-//                }
+//            $tmp = Array();
+//            Yii::$app->session->setFlash('uzlistFormSubmitted');
+//            for ($i=0; $i < count($model->uzs_box); $i++) {
+//                $tmp[] = $model->uzs_box[$i];
 //            }
+//            return $this->render('check', [
+//                'model' => $model->uzs_box
+//            ]);
+//            $customers = Customers::find()->all();
+            $cert = new Cert();
 
+            $cert->num = $model->num;
+            $cert->st_date = $model->st_date;
+            $cert->ex_date = $model->st_date;
+            $cert->sc_link = $model->sc_link;
+
+            if (date('m-d', strtotime($cert->st_date)) == '01-01'){
+                $cert->ex_date = date('Y-m-d', strtotime(''.$cert->st_date.'+1 year - 1 day'));
+            }
+            else {
+                $cert->ex_date = date('Y-m-d', strtotime(''.$cert->st_date.'+1 year'));
+            }
+
+            $cert->scanfile_format = $model->scanfile_format;
+            $cert->customer_id = $customer_id;
+            $cert->save();
+
+
+            $cert =  Cert::find()->where(['num' => $model->num])->all();
+            for ($i = 0; $i < count($model->uzs_box); $i++){
+                $certuz = new CertUz();
+                $certuz->cert_id = $cert[0]->id;
+                $certuz->uz_id = $model->uzs_box[$i];
+                $certuz->save();
+            }
 
             $this->redirect(array('customers/view', 'id'=>$customer_id));
+
+
         }
         $uzs =  Uzs::find()->where(['customer_id' => $customer_id])->all();
 //        $uzs = $customer_id->uzs;
         for ($i = 0; $i < count($uzs); $i++){
-            array_push($model->check_box, $uzs[$i]);
+            array_push($model->uzs_box, $uzs[$i]);
         }
         return $this->render('add', [
             'model' => $model,
