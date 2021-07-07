@@ -6,6 +6,7 @@ use yii\bootstrap\ButtonDropdown;
 use yii\helpers\Html;
 use app\models\CastomersForm;
 use yii\bootstrap\ActiveForm;
+use yii\helpers\Url;
 
 //Лучше тут и индиекса кидать сам обьект, а не тольно её ИД и искать её в action
 
@@ -23,7 +24,10 @@ use yii\bootstrap\ActiveForm;
         $(".customers_description_show_mode").show();
     }
     function customer_description_edit_save(){
-        
+        var tmp = document.getElementById("customer_description_edit_box").value();
+
+        $(".customers_description_edit_mode").hide();
+        $(".customers_description_show_mode").show();
     }
 
 </script>
@@ -151,7 +155,7 @@ endif;?>
 
 
 
-                        <p type="text" id="customer_description">
+                        <label type="text" id="customer_description">
                             <?
                             if ($customer['description'] == NULL){
                                 echo ('Примечания отсутствуют.');
@@ -160,19 +164,17 @@ endif;?>
                                 echo ($customer['description']);
                             }
                             ?>
-                        </p>
+                        </label>
         </div>
         <div class="form-group customers_description_edit_mode" hidden>
-
+            <form method="get" action="<?= Url::to(['customers/description']) ?>">
                 <div class="form-group">
                     <button type="button" class="btn btn-xs" OnClick="customer_description_edit_save();" title = "Сохранить"><span class="glyphicon glyphicon-ok"></span></button>
                     <button type="button" class="btn btn-xs" OnClick="customer_description_edit_cancel();" title = "Отменить"><span class="glyphicon glyphicon-remove"></span></button>
-
                 </div>
 
-                <div class="form-group customers_description_edit_mode" hidden>
-                    <textarea type="text" class="form-control" style="resize:vertical" id="customer_description_edit_box" name="customer_description_edit_box"><? echo $customer['description']; ?></textarea>
-                </div>
+                <textarea type="text" class="form-control" style="resize:vertical" id="customer_description_edit_box" name="customer_description_edit_box"><? echo $customer['description']; ?></textarea>
+            </form>
         </div>
     </div>
 </div>
