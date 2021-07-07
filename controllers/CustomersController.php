@@ -29,17 +29,18 @@ class CustomersController extends Controller{
             };
         }
 
-        $podel = new CustomersForm();
-        if ($podel->load(Yii::$app->request->post())) {
+        $model = new CustomersForm();
+        if ($model->load(Yii::$app->request->post())) {
             $customer_tmp = new Customers();
-            $customer_tmp->fullname = $podel->fullname;
-            $customer_tmp->shortname = $podel->shortname;
-            $customer_tmp->address = $podel->address;
-            $customer_tmp->description = $podel->description;
-            $customer_tmp->UHH = $podel->UHH;
-            $customer_tmp->doc_type_id = $podel->doc_type_id;
+            $customer_tmp->fullname = $model->fullname;
+            $customer_tmp->shortname = $model->shortname;
+            $customer_tmp->address = $model->address;
+            $customer_tmp->description = $model->description;
+            $customer_tmp->UHH = $model->UHH;
+            $customer_tmp->doc_type_id = $model->doc_type_id;
             $customer_tmp->save();
 
+            $this->redirect(array('site/index'));
 
         }
 
@@ -78,7 +79,7 @@ class CustomersController extends Controller{
             'customer' => $customer,
             'realuzs' => $realuzs,
             'cert' => $cert,
-            'model' => $podel,
+            'model' => $model,
             ]);
     }
 

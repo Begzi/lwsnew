@@ -163,9 +163,8 @@ endif;?>
             <?php $form = ActiveForm::begin(['id' => 'description-form']); ?>
 
             <div class="form-group">
-                <?= Html::submitButton('<span class="glyphicon glyphicon-ok"></span>', ['class' => 'btn-xs', 'name' => 'customers-add-button', 'title' => 'Сохранить']) ?>
-                <button type="button" class="btn btn-xs" OnClick="customer_description_edit_save();" title = "Сохранить"><span class="glyphicon glyphicon-ok"></span></button>
-                <button type="button" class="btn btn-xs" OnClick="customer_description_edit_cancel();" title = "Отменить"><span class="glyphicon glyphicon-remove"></span></button>
+                <?= Html::submitButton('<span class="glyphicon glyphicon-ok"></span>', ['class' => 'btn btn-xs', 'name' => 'customers-add-button', 'title' => 'Сохранить']) ?>
+                 <button type="button" class="btn btn-xs" OnClick="customer_description_edit_cancel();" title = "Отменить"><span class="glyphicon glyphicon-remove"></span></button>
 
             </div>
             <p type="text" id="customer_description">
