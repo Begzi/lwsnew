@@ -22,43 +22,6 @@ class CustomersController extends Controller{
     /**
      * @return string|\yii\web\Response
      */
-    public function actionAdd() {
-//        if (Yii::$app->user->identity->username != 'admin') {
-//            return $this->actionError();
-//        }
-        $model = new CustomersForm();
-        if ($model->load(Yii::$app->request->post())) {
-
-            Yii::$app->session->setFlash('contactFormSubmitted');
-//            $customers = Customers::find()->all();
-            $cumstomer = new Customers();
-//            for ($i = 0; $i < count($customers); $i++) {
-//                if ($customers[$i]['name'] == $model->name && $customers[$i]['brand'] == $model->brand) {
-//                    $cumstomer->number = $customers[$i]['number'] + 1;
-//                    $cumstomer->name = $customers[$i]['name'];
-//                    $cumstomer->brand = $customers[$i]['brand'];
-//                    $cumstomer[$i]->delete();
-//                    $cumstomer->save();
-//                    return $this->refresh();
-//                }
-//            }
-            $cumstomer->fullname = $model->fullname;
-            $cumstomer->shortname = $model->shortname;
-            $cumstomer->address = $model->address;
-            $cumstomer->description = $model->description;
-            $cumstomer->save();
-
-            $query = Customers::find()->where(['fullname' => $model->fullname])->all();
-
-            return $this->render('view', [
-                'id' => $query[0]['id'],
-            ]);
-        }
-        return $this->render('add', [
-            'model' => $model,
-        ]);
-
-    }
     public function actionView($id){
         function build_sorter($key) {
             return function ($a, $b) use ($key) {
@@ -66,9 +29,22 @@ class CustomersController extends Controller{
             };
         }
 
+        $podel = new CustomersForm();
+        if ($podel->load(Yii::$app->request->post())) {
+            $customer_tmp = new Customers();
+            $customer_tmp->fullname = $podel->fullname;
+            $customer_tmp->shortname = $podel->shortname;
+            $customer_tmp->address = $podel->address;
+            $customer_tmp->description = $podel->description;
+            $customer_tmp->UHH = $podel->UHH;
+            $customer_tmp->doc_type_id = $podel->doc_type_id;
+            $customer_tmp->save();
 
+
+        }
 
         $customer = Customers::findOne($id);
+
 //        $customer = $customers[0];
 //        if (Yii::$app->user->identity->username == 'admin') {
 //            Yii::$app->session->setFlash('contactFormSubmitted');
@@ -100,18 +76,72 @@ class CustomersController extends Controller{
         array_push($realuzs,$tmp);
         return $this->render('view', [
             'customer' => $customer,
-            'uzs' => $uzs,
             'realuzs' => $realuzs,
             'cert' => $cert,
-
+            'model' => $podel,
             ]);
     }
 
-    public function customer_description_edit_open(){
+    public function actionAdd() {
+//        if (Yii::$app->user->identity->username != 'admin') {
+//            return $this->actionError();
+//        }
+        $model = new CustomersForm();
+        if ($model->load(Yii::$app->request->post())) {
+
+            Yii::$app->session->setFlash('contactFormSubmitted');
+//            $customers = Customers::find()->all();
+            $cumstomer = new Customers();
+            $cumstomer->fullname = $model->fullname;
+            $cumstomer->shortname = $model->shortname;
+            $cumstomer->address = $model->address;
+            $cumstomer->description = $model->description;
+            $cumstomer->UHH = $model->UHH;
+            $cumstomer->doc_type_id = $model->doc_type_id;
+            $cumstomer->save();
+
+            $query = Customers::find()->where(['fullname' => $model->fullname])->all();
+
+            $this->redirect(array('customers/view', 'id'=>$query[0]['id']));
+        }
+        return $this->render('add', [
+            'model' => $model,
+        ]);
 
     }
 
-    public function customer_description_edit_cancel(){
+    public function actionSearchfull(){
+
+        $search = Yii::$app->request->get('search');
+
+        $search1 = str_replace(' ','', $search);
+
+        $query = Customers::find()->where(['like', 'replace(fullname, " ", "")', $search1]);
+
+        $pages = new Pagination(['totalCount' => $query->count(), 'pageSize' => 15]);
+        $customers = $query->offset($pages->offset)->limit($pages->limit)->all();
+        return $this->render('index', [
+            'customers' => $customers,
+            'pages' => $pages,
+            'searchfull' => $search1
+        ]);
+
+    }
+    public function actionSearchshort(){
+
+        $search = Yii::$app->request->get('search');
+
+        $search1 = str_replace(' ','', $search);
+
+        $query = Customers::find()->where(['like', 'replace(fullname, " ", "")', $search1]);
+
+        $pages = new Pagination(['totalCount' => $query->count(), 'pageSize' => 15]);
+        $customers = $query->offset($pages->offset)->limit($pages->limit)->all();
+        return $this->render('index', [
+            'customers' => $customers,
+            'pages' => $pages,
+            'searchshort' => $search1
+        ]);
 
     }
 }

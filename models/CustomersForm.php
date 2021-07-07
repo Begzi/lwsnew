@@ -13,9 +13,10 @@ class CustomersForm extends Model
     public $fullname;
     public $shortname;
     public $address;
-    public $uz_list_id;
+    public $UHH;
     public $description;
     public $com_id;
+    public $doc_type_id;
 
 
     /**
@@ -25,7 +26,7 @@ class CustomersForm extends Model
     {
         return [
             // name, email, subject and body are required
-            [['fullname', 'shortname', 'address', 'uz_list_id', 'description', 'com_id'], 'required'],
+            [['fullname', 'shortname', 'address', 'UHH', 'description', 'com_id', 'doc_type_id'], 'required'],
 
 //            // verifyCode needs to be entered correctly
 //            ['verifyCode', 'captcha'],

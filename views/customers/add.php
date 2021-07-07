@@ -38,10 +38,18 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?= $form->field($model, 'address')->textInput(['autofocus' => true])  ?>
 
-            <?= $form->field($model, 'description')->textInput(['autofocus' => true]) ?>
+            <?= $form->field($model, 'description')->textInput(['autofocus' => false]) ?>
 
+            <?= $form->field($model, 'UHH')->textInput(['autofocus' => true]) ?>
 
-
+            <?= $form->field($model, 'doc_type_id')
+            ->dropDownList([
+            '1' => 'Электронный',
+            '2' => 'Бумажный',
+            ],
+            [
+            'prompt' => 'Выберите один вариант'
+            ]);?>
             <div class="form-group">
                 <?= Html::submitButton('Add btn', ['class' => 'btn btn-primary', 'name' => 'customers-add-button']) ?>
 

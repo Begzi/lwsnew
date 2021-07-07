@@ -4,12 +4,26 @@ $this->params['breadcrumbs'][] = $this->title;
 
 use yii\bootstrap\ButtonDropdown;
 use yii\helpers\Html;
+use app\models\CastomersForm;
+use yii\bootstrap\ActiveForm;
 
 //Лучше тут и индиекса кидать сам обьект, а не тольно её ИД и искать её в action
 
 
 
 ?>
+<script>
+    function customer_description_edit_open(){
+        $(".customers_description_show_mode").hide();
+        $(".customers_description_edit_mode").show();
+    }
+
+    function customer_description_edit_cancel() {
+        $(".customers_description_edit_mode").hide();
+        $(".customers_description_show_mode").show();
+    }
+
+</script>
 <div class="container-fluid">
     <div class="row">
         <div class="col-xs-8">
@@ -28,7 +42,7 @@ use yii\helpers\Html;
         </div>
         <div class="col-xs-4">
             <div class="col-xs-12">
-                <?= Html::a('Журнал обращений', ['/uz/add', 'customer_id' => $customer['id']], ['class'=>'btn btn-primary']) ?>
+                <?= Html::a('Журнал обращений', ['/ticket/index', 'customer_id' => $customer['id']], ['class'=>'btn btn-primary']) ?>
                 <?= Html::a('Создать обращение', ['/uz/add', 'customer_id' => $customer['id']], ['class'=>'btn btn-primary']) ?>
 
             </div>
@@ -45,6 +59,14 @@ use yii\helpers\Html;
             <div class="col-xs-12">
 
                                 <h4><span>Юридический адресс: <?php echo $customer['address'] ?></span></h4>
+
+            </div>
+            <div class="col-xs-12">
+                                <h4><span>ИНН: <?php echo $customer['UHH'] ?></span></h4>
+
+            </div>
+            <div class="col-xs-12">
+                                    <h4><span>Тип обмена документами: <?php echo $customer->doctype->name ?></span></h4>
 
             </div>
         </div>
@@ -120,40 +142,59 @@ endif;?>
 
     <div class="container-fluid col-lg-12">
 
-                    <!-------<div class="customers_description_edit_mode" hidden>
-                        <button type="button" class="btn btn-xs" OnClick="customer_description_edit_save();" title = "Сохранить"><span class="glyphicon glyphicon-ok"></span></button>
-                        <button type="button" class="btn btn-xs" OnClick="customer_description_edit_cancel();" title = "Отменить"><span class="glyphicon glyphicon-remove"></span></button>
-                    </div> На будущее мне
-                     'view' => function($url, $model)   {
-                        return Html::a('<button class="btn btn-success">View &nbsp;<i class="glyphicon glyphicon-eye-open"></i></button>',$url);
-                    },
-                 'update' => function($url, $model) {
-                        return Html::a('<button class="btn btn-primary">Update &nbsp;<i class="glyphicon glyphicon-pencil"></i></button>',$url);
-                    },
-                 'delete' => function($url, $model) {
-                      return Html::a('<button class="btn btn-danger">Delete &nbsp;<i class="glyphicon glyphicon-trash"></i></button>', $url,
-                             ['data-confirm' => 'Are you sure you want to delete this item?', 'data-method' =>'POST']
-                          );
-                    <div class="customers_description_show_mode">
-                         <button type="button" class="btn btn-xs" OnClick="customer_description_edit_open();" title = "Редактировать" id="customer_description_edit_open_button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
-                       -------->
-                        <span><?= Html::a('<button class="btn btn-primary">Update &nbsp;<i class="glyphicon glyphicon-pencil"></i></button>',
-                                ['/uz/add', 'customer_id' => $customer['id']], ['class'=>'btn btn-xs']) ?>
-                       </span>
 
-            
-                <div class="customers_description_show_mode">
-                    <p type="text" id="customer_description">
-                        <?
-                        if ($customer['description'] == NULL){
-                            echo ('Примечания отсутствуют.');
-                        }
-                        else {
-                            echo ($customer['description']);
-                        }
-                        ?>
-                    </p>
-                </div>
+        <div class="customers_description_show_mode">
+                        <button type="button" class="btn btn-xs" OnClick="customer_description_edit_open();" title = "Редактировать" id="customer_description_edit_open_button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
+
+
+
+                        <p type="text" id="customer_description">
+                            <?
+                            if ($customer['description'] == NULL){
+                                echo ('Примечания отсутствуют.');
+                            }
+                            else {
+                                echo ($customer['description']);
+                            }
+                            ?>
+                        </p>
+        </div>
+        <div class="form-group customers_description_edit_mode" hidden>
+            <?php $form = ActiveForm::begin(['id' => 'description-form']); ?>
+
+            <div class="form-group">
+                <?= Html::submitButton('<span class="glyphicon glyphicon-ok"></span>', ['class' => 'btn-xs', 'name' => 'customers-add-button', 'title' => 'Сохранить']) ?>
+                <button type="button" class="btn btn-xs" OnClick="customer_description_edit_save();" title = "Сохранить"><span class="glyphicon glyphicon-ok"></span></button>
+                <button type="button" class="btn btn-xs" OnClick="customer_description_edit_cancel();" title = "Отменить"><span class="glyphicon glyphicon-remove"></span></button>
+
+            </div>
+            <p type="text" id="customer_description">
+                <?
+                if ($customer['description'] == NULL){
+                    echo ('Примечания отсутствуют.');
+                }
+                else {
+                    echo ($customer['description']);
+                }
+                ?>
+            </p>
+            <div class="form-group customers_description_edit_mode" hidden>
+                <textarea type="text" class="form-control" style="resize:vertical" id="customer_description_edit_box" name="customer_description_edit_box"><? echo $customer['description']; ?></textarea>
+            </div>
+            <?= $form->field($model, 'description')->textarea(['class' => "form-control",
+                'style'=>"resize:vertical",
+                'id'=>"customer_description_edit_box",
+                'name'=>"customer_description_edit_box",
+                ]);
+            $model->fullname = $customer->fullname;
+            $model->shortname = $customer->shortname;
+            $model->address = $customer->address;
+            $model->UHH = $customer->UHH;
+            $model->doc_type_id = $customer->doc_type_id;?>
+
+
+            <?php ActiveForm::end(); ?>
+        </div>
     </div>
 </div>
 
@@ -177,5 +218,20 @@ endif;?>
             }
         });
     }
-
 </script>
+
+
+
+<!--<--------------'view' => function($url, $model)   {
+                        return Html::a('<button class="btn btn-success">View &nbsp;<i class="glyphicon glyphicon-eye-open"></i></button>',$url);
+                    },
+                 'update' => function($url, $model) {
+                        return Html::a('<button class="btn btn-primary">Update &nbsp;<i class="glyphicon glyphicon-pencil"></i></button>',$url);
+                    },
+                 'delete' => function($url, $model) {
+                      return Html::a('<button class="btn btn-danger">Delete &nbsp;<i class="glyphicon glyphicon-trash"></i></button>', $url,
+                             ['data-confirm' => 'Are you sure you want to delete this item?', 'data-method' =>'POST']
+                          ); кнопки красивые ТУТЬ!
+
+                           <span>
+                        </span>----->

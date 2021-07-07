@@ -24,8 +24,12 @@ class Customers extends ActiveRecord
     {
         return $this->hasMany(Cert::class, ['customer_id' => 'id']);
     }
-    public function getNewcert()
+    public function getNewcert() //пользовался когда то можно удалять
     {
         return $this->hasMany(NewCert::class, ['customer_id' => 'id']);
+    }
+    public function getDoctype()
+    {
+        return $this->hasOne(Doc::class, ['id' => 'doc_type_id']);
     }
 }
