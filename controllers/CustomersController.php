@@ -144,4 +144,16 @@ class CustomersController extends Controller{
         ]);
 
     }
+    public function actionDescription(){
+
+        $description = Yii::$app->request->get('customer_description_edit_box');
+
+        $description1 = str_replace(' ','', $description);
+        if ($description != NULL){
+
+            return $this->redirect(array('site/index'));
+        }
+
+        return $this->redirect(array('site/error'));
+    }
 }

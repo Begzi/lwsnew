@@ -22,6 +22,9 @@ use yii\bootstrap\ActiveForm;
         $(".customers_description_edit_mode").hide();
         $(".customers_description_show_mode").show();
     }
+    function customer_description_edit_save(){
+        
+    }
 
 </script>
 <div class="container-fluid">
@@ -160,40 +163,16 @@ endif;?>
                         </p>
         </div>
         <div class="form-group customers_description_edit_mode" hidden>
-            <?php $form = ActiveForm::begin(['id' => 'description-form']); ?>
 
-            <div class="form-group">
-                <?= Html::submitButton('<span class="glyphicon glyphicon-ok"></span>', ['class' => 'btn-xs', 'name' => 'customers-add-button', 'title' => 'Сохранить']) ?>
-                <button type="button" class="btn btn-xs" OnClick="customer_description_edit_save();" title = "Сохранить"><span class="glyphicon glyphicon-ok"></span></button>
-                <button type="button" class="btn btn-xs" OnClick="customer_description_edit_cancel();" title = "Отменить"><span class="glyphicon glyphicon-remove"></span></button>
+                <div class="form-group">
+                    <button type="button" class="btn btn-xs" OnClick="customer_description_edit_save();" title = "Сохранить"><span class="glyphicon glyphicon-ok"></span></button>
+                    <button type="button" class="btn btn-xs" OnClick="customer_description_edit_cancel();" title = "Отменить"><span class="glyphicon glyphicon-remove"></span></button>
 
-            </div>
-            <p type="text" id="customer_description">
-                <?
-                if ($customer['description'] == NULL){
-                    echo ('Примечания отсутствуют.');
-                }
-                else {
-                    echo ($customer['description']);
-                }
-                ?>
-            </p>
-            <div class="form-group customers_description_edit_mode" hidden>
-                <textarea type="text" class="form-control" style="resize:vertical" id="customer_description_edit_box" name="customer_description_edit_box"><? echo $customer['description']; ?></textarea>
-            </div>
-            <?= $form->field($model, 'description')->textarea(['class' => "form-control",
-                'style'=>"resize:vertical",
-                'id'=>"customer_description_edit_box",
-                'name'=>"customer_description_edit_box",
-                ]);
-            $model->fullname = $customer->fullname;
-            $model->shortname = $customer->shortname;
-            $model->address = $customer->address;
-            $model->UHH = $customer->UHH;
-            $model->doc_type_id = $customer->doc_type_id;?>
+                </div>
 
-
-            <?php ActiveForm::end(); ?>
+                <div class="form-group customers_description_edit_mode" hidden>
+                    <textarea type="text" class="form-control" style="resize:vertical" id="customer_description_edit_box" name="customer_description_edit_box"><? echo $customer['description']; ?></textarea>
+                </div>
         </div>
     </div>
 </div>
