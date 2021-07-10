@@ -29,34 +29,39 @@ class CustomersController extends Controller{
             };
         }
 
+        $customer = Customers::findOne($id);
         $model = new CustomersForm();
         if ($model->load(Yii::$app->request->post())) {
-            $customer_tmp = new Customers();
-            $customer_tmp->fullname = $model->fullname;
-            $customer_tmp->shortname = $model->shortname;
-            $customer_tmp->address = $model->address;
-            $customer_tmp->description = $model->description;
-            $customer_tmp->UHH = $model->UHH;
-            $customer_tmp->doc_type_id = $model->doc_type_id;
-            $customer_tmp->save();
-
-            $this->redirect(array('site/index'));
-
+            if ($model->doc_type_id == NULL) {
+                $customer->description = $model->description;
+                $customer->save();
+            } elseif ($model->description == NULL) {
+                $customer->doc_type_id = $model->doc_type_id;
+                $customer->save();
+            }
+            // после изменения примечания кнопка сохранить отсылает сюда
         }
 
         $customer = Customers::findOne($id);
 
-//        $customer = $customers[0];
-//        if (Yii::$app->user->identity->username == 'admin') {
-//            Yii::$app->session->setFlash('contactFormSubmitted');
-//        }
+        $text = preg_replace( "#\r?\n#", "<br />", $customer->description );
+        $customer->description = $text;
+        // при вывводе примечания выводились и знак следующей строки!
+
+
         $uzs = $customer->uzs;
-        $cert = $customer->cert;
         usort($uzs, build_sorter('type_id'));
         $tmp= [];
         $realuzs= [];
         $k=0;
+        // делёшься узлов по типу
+        $date = date('Y-m-d ', time());
         for ($i=0; $i < count($uzs); $i++){
+
+//            $cert = $uzs[$i]->cert;
+//            if ($cert[count(cert) - 1]->ex_date > $date){
+//
+//            }
             if (empty($tmp)){
                 array_push($tmp,$uzs[$i]);
             }
@@ -69,16 +74,18 @@ class CustomersController extends Controller{
                     array_push($realuzs,$tmp);
                     $tmp=[];
                     $k=0;
-                    $i=$i-1;
+                    array_push($tmp,$uzs[$i]);
                 }
 
             }
         }
         array_push($realuzs,$tmp);
+
+
         return $this->render('view', [
             'customer' => $customer,
             'realuzs' => $realuzs,
-            'cert' => $cert,
+            'date' => $date,
             'model' => $model,
             ]);
     }
@@ -90,20 +97,34 @@ class CustomersController extends Controller{
         $model = new CustomersForm();
         if ($model->load(Yii::$app->request->post())) {
 
-            Yii::$app->session->setFlash('contactFormSubmitted');
+            if (strlen(strval($model->UHH))== 12){
+                Yii::$app->session->setFlash('WrongUHHFormSubmitted');
+                return $this->render('add', [
+                    'model' => $model,
+                ]);
+
+            }
+            $query = Customers::find()->where(['UHH' => $model->UHH])->all();
+            if ($query != NULL ){
+                Yii::$app->session->setFlash('HaveUHHFormSubmitted');
+                return $this->render('add', [
+                    'model' => $model,
+                ]);
+
+            }
 //            $customers = Customers::find()->all();
-            $cumstomer = new Customers();
-            $cumstomer->fullname = $model->fullname;
-            $cumstomer->shortname = $model->shortname;
-            $cumstomer->address = $model->address;
-            $cumstomer->description = $model->description;
-            $cumstomer->UHH = $model->UHH;
-            $cumstomer->doc_type_id = $model->doc_type_id;
-            $cumstomer->save();
+            $customer = new Customers();
+            $customer->fullname = $model->fullname;
+            $customer->shortname = $model->shortname;
+            $customer->address = $model->address;
+            $customer->description = $model->description;
+            $customer->UHH = $model->UHH;
+            $customer->doc_type_id = $model->doc_type_id;
+            $customer->save();
 
             $query = Customers::find()->where(['fullname' => $model->fullname])->all();
 
-            $this->redirect(array('customers/view', 'id'=>$query[0]['id']));
+            return $this->redirect(array('customers/view', 'id'=>$query[0]['id']));
         }
         return $this->render('add', [
             'model' => $model,
@@ -111,6 +132,53 @@ class CustomersController extends Controller{
 
     }
 
+    public function actionDescription($id) {
+//        if (Yii::$app->user->identity->username != 'admin') {
+//            return $this->actionError();
+//        }
+        $customer = Customers::findOne($id);
+        $model = new CustomersForm();
+        if ($model->load(Yii::$app->request->post())) {
+
+            if (strlen(strval($model->UHH))== 12){
+                Yii::$app->session->setFlash('WrongUHHFormSubmitted');
+
+                return $this->render('description', [
+                    'model' => $model,
+                    'customer' => $customer
+                ]);
+
+            }
+            $query = Customers::find()->where(['UHH' => $model->UHH])->all();
+            for ($i = 0; $i < count($query); $i++){
+                if ($query[$i]->id != $customer->id ){
+                    Yii::$app->session->setFlash('HaveUHHFormSubmitted');
+                    return $this->render('description', [
+                        'model' => $model,
+                    ]);
+
+                }
+
+            }
+//            $customers = Customers::find()->all();
+            $customer->fullname = $model->fullname;
+            $customer->shortname = $model->shortname;
+            $customer->address = $model->address;
+            $customer->description = $model->description;
+            $customer->UHH = $model->UHH;
+            $customer->doc_type_id = $model->doc_type_id;
+            $customer->save();
+
+            $query = Customers::find()->where(['fullname' => $model->fullname])->all();
+
+            return $this->redirect(array('customers/view', 'id'=>$query[0]['id']));
+        }
+        return $this->render('description', [
+            'model' => $model,
+            'customer' => $customer
+        ]);
+
+    }
     public function actionSearchfull(){
 
         $search = Yii::$app->request->get('search');
@@ -129,6 +197,23 @@ class CustomersController extends Controller{
 
     }
     public function actionSearchshort(){
+
+        $search = Yii::$app->request->get('search');
+
+        $search1 = str_replace(' ','', $search);
+
+        $query = Customers::find()->where(['like', 'replace(shortname, " ", "")', $search1]);
+
+        $pages = new Pagination(['totalCount' => $query->count(), 'pageSize' => 15]);
+        $customers = $query->offset($pages->offset)->limit($pages->limit)->all();
+        return $this->render('index', [
+            'customers' => $customers,
+            'pages' => $pages,
+            'searchshort' => $search1
+        ]);
+
+    }
+    public function actionAssociation(){
 
         $search = Yii::$app->request->get('search');
 

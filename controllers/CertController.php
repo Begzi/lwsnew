@@ -33,7 +33,6 @@ class CertController extends Controller
 
             $cert->num = $model->num;
             $cert->st_date = $model->st_date;
-            $cert->ex_date = $model->st_date;
             $cert->sc_link = $model->sc_link;
 
             if (date('m-d', strtotime($cert->st_date)) == '01-01'){
@@ -56,15 +55,11 @@ class CertController extends Controller
                 $certuz->save();
             }
 
-            $this->redirect(array('customers/view', 'id'=>$customer_id));
+            return $this->redirect(array('customers/view', 'id'=>$customer_id));
 
 
         }
         $uzs =  Uzs::find()->where(['customer_id' => $customer_id])->all();
-//        $uzs = $customer_id->uzs;
-        for ($i = 0; $i < count($uzs); $i++){
-            array_push($model->uzs_box, $uzs[$i]);
-        }
         return $this->render('add', [
             'model' => $model,
             'customer_id' => $customer_id,

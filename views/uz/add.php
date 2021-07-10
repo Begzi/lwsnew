@@ -14,47 +14,53 @@ $this->title = 'Uzs ADD';
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
-<div class="uz_list_add">
-    <h1><?= Html::encode($this->title) ?></h1>
 
-    <?php if (Yii::$app->session->hasFlash('uzlistFormSubmitted')): ?>
+<div class="container">
+    <div class="uz_list_add">
+        <h1><?= Html::encode($this->title) ?></h1>
 
-        <div class="alert alert-success">
-            You write Customer. You can continue to write a new Customer.
-        </div>
+        <?php if (Yii::$app->session->hasFlash('uzlistFormSubmitted')): ?>
 
-
-    <?php endif; ?>
-
-    <div class="row">
-        <div class="col-lg-5">
-
-            <?php $form = ActiveForm::begin(['id' => 'uz-list-form']); ?>
-
-
-            <?= $form->field($model, 'type_id')->textInput(['autofocus' => true]) ?>
-
-            <?= $form->field($model, 'net_id')->textInput(['autofocus' => true])  ?>
-
-            <?= $form->field($model, 'support_a')->textInput(['autofocus' => true]) ?>
-
-            <?php $model->number_for_add = 1 ?>
-
-
-
-
-            <div class="form-group">
-                <?= Html::submitButton('Add btn', ['class' => 'btn btn-primary', 'name' => 'uzs-add-button']) ?>
-
+            <div class="alert alert-success">
+                You write Customer. You can continue to write a new Customer.
             </div>
 
-            <?php ActiveForm::end(); ?>
 
+        <?php endif; ?>
+
+        <div class="row">
+            <div class="col-lg-5">
+
+                <?php $form = ActiveForm::begin(['id' => 'uz-list-form']); ?>
+
+                <?= $form->field($model, 'type_id')
+                    ->dropDownList($type);
+                ?>
+
+                <?= $form->field($model, 'net_id')
+                    ->dropDownList($net);
+                ?>
+
+                <?= $form->field($model, 'support_a')->
+                checkbox();?>
+
+                <?php $model->number_for_add = 1 ?>
+
+
+
+
+                <div class="form-group">
+                    <?= Html::submitButton('Add btn', ['class' => 'btn btn-primary', 'name' => 'uzs-add-button']) ?>
+
+                </div>
+
+                <?php ActiveForm::end(); ?>
+
+            </div>
         </div>
+
     </div>
-
 </div>
-
 
 
 

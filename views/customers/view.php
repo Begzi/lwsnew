@@ -16,15 +16,30 @@ use yii\bootstrap\ActiveForm;
     function customer_description_edit_open(){
         $(".customers_description_show_mode").hide();
         $(".customers_description_edit_mode").show();
+        $(".customers_doc_edit_mode").hide();
+        $(".customers_doc_show_mode").show();
     }
 
     function customer_description_edit_cancel() {
         $(".customers_description_edit_mode").hide();
         $(".customers_description_show_mode").show();
     }
+    function customer_doc_edit_open(){
+        $(".customers_doc_show_mode").hide();
+        $(".customers_doc_edit_mode").show();
+        $(".customers_description_edit_mode").hide();
+        $(".customers_description_show_mode").show();
+    }
+
+    function customer_doc_edit_cancel() {
+        $(".customers_doc_edit_mode").hide();
+        $(".customers_doc_show_mode").show();
+    }
 
 </script>
 <div class="container-fluid">
+    <?= Html::a('Изменить данные заказчика', ['/customers/description', 'id' => $customer['id']], ['class'=>'btn btn-primary']) ?>
+
     <div class="row">
         <div class="col-xs-8">
             <div class="col-xs-12">
@@ -66,7 +81,28 @@ use yii\bootstrap\ActiveForm;
 
             </div>
             <div class="col-xs-12">
-                                    <h4><span>Тип обмена документами: <?php echo $customer->doctype->name ?></span></h4>
+
+                <div class="customers_doc_show_mode">
+                    <button type="button" class="btn btn-xs" OnClick="customer_doc_edit_open();" title = "Редактировать" id="customer_description_edit_open_button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
+                    <h4><span>Тип обмена документами: <?php echo $customer->doctype->name ?></span></h4>
+
+                </div>
+                <div class="form-group customers_doc_edit_mode" hidden>
+                    <?php $form = ActiveForm::begin(['id' => 'doc-form']); ?>
+
+                    <div class="form-group">
+                        <?= Html::submitButton('<span class="glyphicon glyphicon-ok"></span>', ['class' => 'btn btn-xs', 'name' => 'customers-doc-button', 'title' => 'Сохранить']) ?>
+                        <button type="button" class="btn btn-xs" OnClick="customer_doc_edit_cancel();" title = "Отменить"><span class="glyphicon glyphicon-remove"></span></button>
+
+                    </div>
+                    </p>
+                    <?= $form->field($model, 'doc_type_id')
+                        ->dropDownList([
+                                '1' => 'Электронный',
+                                '2' => 'Бумажный'], ['options'=>[$customer['doc_type_id']=>['Selected'=>true]]]);
+                    ?>
+                    <?php ActiveForm::end(); ?>
+                </div>
 
             </div>
         </div>
@@ -100,13 +136,15 @@ use yii\bootstrap\ActiveForm;
     <div class="row" >
         <div class="col-xs-12">
 
+
                         <div class="normal_mode_labels">
                             <button class="accordion">Узлов <?php echo count($realuzs[$k]) .' '.
-                                    $realuzs[$k][0]->uztype->name;?> </button>
+                                    $realuzs[$k][0]->uztype->name . ' ' . $date = date('Y-m-d ', time()) .
+                                ' ' . $realuzs[$k][0]->certuz[count(certuz) - 1]->cert->ex_date ;;?> </button>
                             <div class="panel">
 
             <?php for ($i = 0; $i < count($realuzs[$k]); $i++):?>
-                <div class="col-xs-12">
+                <div class="col-xs-8">
                     <?php
                     $certuzs = $realuzs[$k][$i]->certuz;
                     ?>
@@ -127,6 +165,11 @@ use yii\bootstrap\ActiveForm;
                         <p></p>
 
                     <?php endfor; ?>
+                </div>
+
+                <div class="col-md-4 col-md-offset-4-xs-8">
+                    <?= Html::a('Удалить узел', ['/uz/delete', 'id' => $realuzs[$k][$i]->id], ['class'=>'btn btn-primary']) ?>
+
                 </div>
             <?php endfor;?>
                        </div>
@@ -163,7 +206,7 @@ endif;?>
             <?php $form = ActiveForm::begin(['id' => 'description-form']); ?>
 
             <div class="form-group">
-                <?= Html::submitButton('<span class="glyphicon glyphicon-ok"></span>', ['class' => 'btn btn-xs', 'name' => 'customers-add-button', 'title' => 'Сохранить']) ?>
+                <?= Html::submitButton('<span class="glyphicon glyphicon-ok"></span>', ['class' => 'btn btn-xs', 'name' => 'customers-description-button', 'title' => 'Сохранить']) ?>
                  <button type="button" class="btn btn-xs" OnClick="customer_description_edit_cancel();" title = "Отменить"><span class="glyphicon glyphicon-remove"></span></button>
 
             </div>
@@ -177,19 +220,10 @@ endif;?>
                 }
                 ?>
             </p>
-            <div class="form-group customers_description_edit_mode" hidden>
-                <textarea type="text" class="form-control" style="resize:vertical" id="customer_description_edit_box" name="customer_description_edit_box"><? echo $customer['description']; ?></textarea>
-            </div>
             <?= $form->field($model, 'description')->textarea(['class' => "form-control",
                 'style'=>"resize:vertical",
-                'id'=>"customer_description_edit_box",
-                'name'=>"customer_description_edit_box",
-                ]);
-            $model->fullname = $customer->fullname;
-            $model->shortname = $customer->shortname;
-            $model->address = $customer->address;
-            $model->UHH = $customer->UHH;
-            $model->doc_type_id = $customer->doc_type_id;?>
+                'value'=>$customer->description
+                ]);?>
 
 
             <?php ActiveForm::end(); ?>

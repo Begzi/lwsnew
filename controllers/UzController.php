@@ -5,7 +5,9 @@ namespace app\controllers;
 
 
 use app\models\UzForm;
+use app\models\UzNet;
 use app\models\Uzs;
+use app\models\UzType;
 use Yii;
 use yii\web\Controller;
 
@@ -41,10 +43,22 @@ class UzController extends Controller
 
 
 
-            $this->redirect(array('customers/view', 'id'=>$customer_id));
+            return $this->redirect(array('customers/view', 'id'=>$customer_id));
+        }
+        $query = UzType::find()->all();
+        $type=Array();
+        for ($i=0; $i < count($query); $i++){
+            array_push($type,$query[$i]->name);
+        }
+        $query = UzNet::find()->all();
+        $net=Array();
+        for ($i=0; $i < count($query); $i++){
+            array_push($net,$query[$i]->name);
         }
         return $this->render('add', [
             'model' => $model,
+            'type' => $type,
+            'net' => $net
         ]);
     }
     public function actionManyadd($customer_id)
@@ -70,10 +84,28 @@ class UzController extends Controller
             }
 
 
-            $this->redirect(array('customers/view', 'id'=>$customer_id));
+            return $this->redirect(array('customers/view', 'id'=>$customer_id));
+        }
+        $query = UzType::find()->all();
+        $type=Array();
+        for ($i=0; $i < count($query); $i++){
+            array_push($type,$query[$i]->name);
+        }
+        $query = UzNet::find()->all();
+        $net=Array();
+        for ($i=0; $i < count($query); $i++){
+            array_push($net,$query[$i]->name);
         }
         return $this->render('manyadd', [
             'model' => $model,
+            'type' => $type,
+            'net' => $net
         ]);
+    }
+    public function actionDelete($id){
+        $uzs = Uzs::findOne($id);
+        $id = $uzs->customers->id;
+        $uzs->delete();
+        return $this->redirect(array('customers/view', 'id'=>$uzs->customers->id));
     }
 }
