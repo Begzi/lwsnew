@@ -46,4 +46,11 @@ $this->params['breadcrumbs'][] = $this->title;
             Для нужд Константина, вывод узлов находящийхся в Красноярске
         </a>
     </p>
+    <p class = changed-area3>
+        <?= Html::a('Показать', ['/newcert/newcertuz'], ['class'=>'btn btn-primary']) ?>
+
+        <a href="<?= \yii\helpers\Url::to(['/newcert/konstantin'])?>" >
+            Для того чтобы узлы знали свой последний актуальный сертификат
+        </a>
+    </p>
 </div>

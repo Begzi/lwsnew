@@ -53,6 +53,9 @@ class CertController extends Controller
                 $certuz->cert_id = $cert[0]->id;
                 $certuz->uz_id = $model->uzs_box[$i];
                 $certuz->save();
+                $uzs =  Uzs::find()->where(['id' => $model->uzs_box[$i]])->all();
+                $uzs[0]->support_a = $cert[0]->id;
+                $uzs[0]->save();
             }
 
             return $this->redirect(array('customers/view', 'id'=>$customer_id));

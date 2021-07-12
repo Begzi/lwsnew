@@ -14,7 +14,7 @@ use yii\web\Controller;
 
 class NewcertController extends Controller
 {
-    public function actionIndex()
+    public function actionIndex()//надо чтобы сам создавал NewCert записи, он пока не может
     {
         $cert = Cert::find()->asArray()->all();
         $customers = Customers::find()->asArray()->all();
@@ -42,7 +42,8 @@ class NewcertController extends Controller
         $cert = NewCert::find()->asArray()->all();
         return $this->render('index', compact('customers', 'cert'));
     }
-    public function actionCheck()
+    public function actionCheck()// перед использованием этой кнопки нужно использовать кнопку выше, сертификаты привести в нормальный вид и потом их же и использовать
+        //надо будет newcert переименовать в обычный cert. Очень важно
     {
         $cert = Cert::find()->asArray()->all();
         $newcert = NewCert::find()->asArray()->all();
@@ -97,5 +98,14 @@ class NewcertController extends Controller
 
         }
         return $this->render('konstantin', compact('uzs', 'customer'));
+    }
+    public function actionNewcertuz()
+    {
+        $uzs = Uzs::find()->all();
+        foreach ($uzs as $value){
+            $value->support_a = $value->certuz[count($value->certuz) - 1]->cert->id;
+            $value->save();
+        }
+        return $this->redirect(array('customers/index'));
     }
 }

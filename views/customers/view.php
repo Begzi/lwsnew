@@ -38,7 +38,7 @@ use yii\bootstrap\ActiveForm;
 
 </script>
 <div class="container-fluid">
-    <?= Html::a('Изменить данные заказчика', ['/customers/description', 'id' => $customer['id']], ['class'=>'btn btn-primary']) ?>
+    <?= Html::a('Изменить данные заказчика', ['/customers/edit', 'id' => $customer['id']], ['class'=>'btn btn-primary']) ?>
 
     <div class="row">
         <div class="col-xs-8">
@@ -132,39 +132,33 @@ use yii\bootstrap\ActiveForm;
 
     </div>
 <?php if ($realuzs != NULL):?>
+
 <?php for ($k = 0; $k < count($realuzs); $k++):?>
     <div class="row" >
         <div class="col-xs-12">
 
-
                         <div class="normal_mode_labels">
                             <button class="accordion">Узлов <?php echo count($realuzs[$k]) .' '.
-                                    $realuzs[$k][0]->uztype->name . ' ' . $date = date('Y-m-d ', time()) .
-                                ' ' . $realuzs[$k][0]->certuz[count(certuz) - 1]->cert->ex_date ;;?> </button>
+                                    $realuzs[$k][0]->uztype->name . ' ' . $date_check[$k];?> </button>
                             <div class="panel">
 
             <?php for ($i = 0; $i < count($realuzs[$k]); $i++):?>
                 <div class="col-xs-8">
-                    <?php
-                    $certuzs = $realuzs[$k][$i]->certuz;
-                    ?>
-
-                    <h3>type_id: <?php echo $realuzs[$k][$i]->uztype->name ?></h3>
-                    <h4><span>net_id: <?php echo $realuzs[$k][$i]->uznet->num ?></span></h4>
-                    <h4><span>support_a: <?php echo $realuzs[$k][$i]['support_a'] ?></span></h4>
-                    <?php
-                    for ($j = 0; $j < count($certuzs); $j++):?>
-                        <?php
-                        $cert = $certuzs[$j]->cert;
-                        echo $certuzs;
+                    <a href="<?= \yii\helpers\Url::to(['/uz/description','id'=>$realuzs[$k][$i]->id])?>" >
+                        <h3>id: <?php echo $realuzs[$k][$i]->id . ' ' . $realuzs[$k][$i]->uztype->name;  ?></h3>
+                    </a>
+                    <h4><span>net_id: <?php echo $realuzs[$k][$i]->uznet->num; ?></span></h4>
+                    <h4><span>support_a: <?php echo $realuzs[$k][$i]->actualcert->ex_date; ?></span></h4>
+                    <p type="text" id="uz_description">
+                        <?
+                        if ( $realuzs[$k][$i]->description == NULL){
+                            echo ('Примечания отсутствуют.');
+                        }
+                        else {
+                            echo ($realuzs[$k][$i]->description);
+                        }
                         ?>
-
-                        <span>cert id <?php echo $cert['id']; ?></span>
-                        <span>cert date <?php echo $cert['ex_date']; ?></span>
-                        <span>cert id <?php echo $cert['num']; ?></span>
-                        <p></p>
-
-                    <?php endfor; ?>
+                    </p>
                 </div>
 
                 <div class="col-md-4 col-md-offset-4-xs-8">
@@ -218,6 +212,9 @@ endif;?>
                 else {
                     echo ($customer['description']);
                 }
+                $text = preg_replace( "#<br />#", "\n", $customer->description );
+                $customer->description = $text;
+                // при вводе примечания не выводились и знак следующей строки!
                 ?>
             </p>
             <?= $form->field($model, 'description')->textarea(['class' => "form-control",

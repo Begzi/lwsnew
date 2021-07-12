@@ -51,17 +51,12 @@ class CustomersController extends Controller{
 
         $uzs = $customer->uzs;
         usort($uzs, build_sorter('type_id'));
+        $date = date('Y-m-d ', time());
         $tmp= [];
         $realuzs= [];
         $k=0;
         // делёшься узлов по типу
-        $date = date('Y-m-d ', time());
         for ($i=0; $i < count($uzs); $i++){
-
-//            $cert = $uzs[$i]->cert;
-//            if ($cert[count(cert) - 1]->ex_date > $date){
-//
-//            }
             if (empty($tmp)){
                 array_push($tmp,$uzs[$i]);
             }
@@ -81,12 +76,36 @@ class CustomersController extends Controller{
         }
         array_push($realuzs,$tmp);
 
+        $date = Yii::$app->formatter->asDate( time());
+        $date_check=[];
+        $date_k = 0;
+        for ($i = 0; $i < count($realuzs); $i++) {
+            for ($j = 0; $j < count($realuzs[$i]); $j++) {
+                $check_tmp =  Yii::$app->formatter->asDate( $realuzs[$i][$j]->actualcert->ex_date);
+                if ($check_tmp) {
+                    if (strtotime($date) < strtotime( $check_tmp)) {
+                        $date_k++;
+                    }
+                }
+            }
+            if ($date_k == count($realuzs[$i])) {
+                array_push( $date_check, 'У всех узлов действуюдщие сертификаты');
+            } elseif ($date_k == 0) {
+                array_push( $date_check,  'У всех узлов нет действующих сертификатов');
+            } else {
+                array_push( $date_check, 'У некоторых узлов нет действующих сертификатов');
+            }
+            $date_k = 0;
+
+
+        }
 
         return $this->render('view', [
             'customer' => $customer,
             'realuzs' => $realuzs,
             'date' => $date,
             'model' => $model,
+            'date_check' => $date_check
             ]);
     }
 
@@ -132,7 +151,7 @@ class CustomersController extends Controller{
 
     }
 
-    public function actionDescription($id) {
+    public function actionEdit($id) {
 //        if (Yii::$app->user->identity->username != 'admin') {
 //            return $this->actionError();
 //        }
@@ -153,7 +172,7 @@ class CustomersController extends Controller{
             for ($i = 0; $i < count($query); $i++){
                 if ($query[$i]->id != $customer->id ){
                     Yii::$app->session->setFlash('HaveUHHFormSubmitted');
-                    return $this->render('description', [
+                    return $this->render('edit', [
                         'model' => $model,
                     ]);
 
@@ -173,7 +192,7 @@ class CustomersController extends Controller{
 
             return $this->redirect(array('customers/view', 'id'=>$query[0]['id']));
         }
-        return $this->render('description', [
+        return $this->render('edit', [
             'model' => $model,
             'customer' => $customer
         ]);
@@ -185,31 +204,15 @@ class CustomersController extends Controller{
 
         $search1 = str_replace(' ','', $search);
 
-        $query = Customers::find()->where(['like', 'replace(fullname, " ", "")', $search1]);
-
+        $query = Customers::find()->orFilterWhere(['like', 'shortname', $search1])
+            ->orFilterWhere(['like', 'fullname', $search1])
+            ->orFilterWhere(['id'=> $search1]);
         $pages = new Pagination(['totalCount' => $query->count(), 'pageSize' => 15]);
         $customers = $query->offset($pages->offset)->limit($pages->limit)->all();
         return $this->render('index', [
             'customers' => $customers,
             'pages' => $pages,
             'searchfull' => $search1
-        ]);
-
-    }
-    public function actionSearchshort(){
-
-        $search = Yii::$app->request->get('search');
-
-        $search1 = str_replace(' ','', $search);
-
-        $query = Customers::find()->where(['like', 'replace(shortname, " ", "")', $search1]);
-
-        $pages = new Pagination(['totalCount' => $query->count(), 'pageSize' => 15]);
-        $customers = $query->offset($pages->offset)->limit($pages->limit)->all();
-        return $this->render('index', [
-            'customers' => $customers,
-            'pages' => $pages,
-            'searchshort' => $search1
         ]);
 
     }

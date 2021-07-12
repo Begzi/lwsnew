@@ -103,9 +103,25 @@ class UzController extends Controller
         ]);
     }
     public function actionDelete($id){
-        $uzs = Uzs::findOne($id);
-        $id = $uzs->customers->id;
-        $uzs->delete();
-        return $this->redirect(array('customers/view', 'id'=>$uzs->customers->id));
+        $uz = Uzs::findOne($id);
+        $id = $uz->customers->id;
+        $uz->delete();
+        return $this->redirect(array('customers/view', 'id'=>$uz->customers->id));
+    }
+
+    public function actionDescription($id)
+    {
+        $uz = Uzs::findOne($id);
+        $model = new UzForm();
+        if ($model->load(Yii::$app->request->post())) {
+
+            $uz->description = $model->description;
+            $uz->save();
+
+        }
+        return $this->render('description', [
+            'uz' => $uz,
+            'model' => $model
+        ]);
     }
 }

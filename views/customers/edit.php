@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <?= $form->field($model, 'fullname')->textInput(['autofocus' => true, 'value'=>$customer->fullname])->label('Полное имя учреждения') ?>
 
-                <?= $form->field($model, 'shortname')->textInput(['autofocus' => true, 'value'=>$customer->fullname])->label('Короткое имя учреждения')?>
+                <?= $form->field($model, 'shortname')->textInput(['autofocus' => true, 'value'=>$customer->shortname])->label('Короткое имя учреждения')?>
 
                 <?= $form->field($model, 'address')->textInput(['autofocus' => true, 'value'=>$customer->address])->label('Юридический аддресс')  ?>
 

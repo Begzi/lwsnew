@@ -41,21 +41,13 @@ for ($i = 0; $i < count($customers); $i++)
                         <input type="text" class="text" name="search" placeholder="Поиск по полному названию" />
                         <?php  if ($searchfull != NULL):?>
                             <label type="text" class="text"><?php echo $searchfull;?></label>
+                            <?= Html::a('<span class="glyphicon glyphicon-remove" style="color:black"></span>', ['customers/searchfull','search'=> ''], ['class'=>'btn btn-xs', 'name' => 'customers-search-button', 'title' => 'Cancel']) ?>
+
                         <?php endif;?>
                     </form>
                 </section>
             </div>
 
-            <div class="col-md-4">
-                <section class="box search">
-                    <form method="get" action="<?= Url::to(['customers/searchshort']) ?>">
-                        <input type="text" class="text" name="search" placeholder="Поиск по короткому названию" />
-                        <?php  if ($searchshort != NULL):?>
-                            <label type="text" class="text"><?php echo $searchshort;?></label>
-                        <?php endif;?>
-                    </form>
-                </section>
-            </div>
 
         <div class="col-md-12 col-md-offset-12">
 

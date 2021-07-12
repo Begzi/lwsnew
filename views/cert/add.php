@@ -45,7 +45,7 @@ $tmp=Array();
                 <?php $model->customer_id = $customer_id ?>
 
                 <?php for($i=0; $i < count($uzs); $i++):?>
-                    <?php $tmp[$uzs[$i]->id] = $uzs[$i]->uztype->name;;?>
+                    <?php $tmp[$uzs[$i]->id] = $uzs[$i]->id . ' ' . $uzs[$i]->uztype->name;?>
                 <?php endfor;?>
                 <?= $form->field($model, 'uzs_box[]')->
                 checkboxList($tmp);?>

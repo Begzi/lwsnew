@@ -4,6 +4,7 @@
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model app\models\ContactForm */
 
+use kartik\datetime\DatePicker;
 use yii\web\View;
 use app\models\UzsForm;
 use yii\bootstrap\Modal;
@@ -41,8 +42,20 @@ $this->params['breadcrumbs'][] = $this->title;
                     ->dropDownList($net);
                 ?>
 
-                <?= $form->field($model, 'support_a')->
-                checkbox();?>
+                <?= $form->field($model, 'supply_time')->widget(DatePicker::className(),[
+                    'name' => 'dp_1',
+                    'type' => DatePicker::TYPE_INPUT,
+                    'options' => ['placeholder' => 'Ввод даты...'],
+                    'convertFormat' => true,
+                    'value'=> date("d.m.Y",(integer) $model->supply_time),
+                    'pluginOptions' => [
+                        'format' => 'dd.MM.yyyy',
+                        'autoclose'=>true,
+                        'weekStart'=>1, //неделя начинается с понедельника
+                        'startDate' => '01.05.2015', //самая ранняя возможная дата
+                        'todayBtn'=>true, //снизу кнопка "сегодня"
+                    ]
+                ]); ?>
 
                 <?php $model->number_for_add = 1 ?>
 
