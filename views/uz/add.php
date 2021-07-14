@@ -4,7 +4,7 @@
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model app\models\ContactForm */
 
-use kartik\datetime\DatePicker;
+use kartik\date\DatePicker;
 use yii\web\View;
 use app\models\UzsForm;
 use yii\bootstrap\Modal;
@@ -47,9 +47,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     'type' => DatePicker::TYPE_INPUT,
                     'options' => ['placeholder' => 'Ввод даты...'],
                     'convertFormat' => true,
-                    'value'=> date("d.m.Y",(integer) $model->supply_time),
                     'pluginOptions' => [
-                        'format' => 'dd.MM.yyyy',
+                        'format' => 'yyyy-MM-dd',
                         'autoclose'=>true,
                         'weekStart'=>1, //неделя начинается с понедельника
                         'startDate' => '01.05.2015', //самая ранняя возможная дата
