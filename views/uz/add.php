@@ -74,23 +74,3 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 </div>
 
-
-
-<!--            <div class="form-group">-->
-<!--                --><?//= Html::submitButton('Add btn', ['class' => 'btn btn-primary', 'name' => 'customers-add-button']) ?>
-<!--                --><?php
-//                Modal::begin([
-//                    'header' => '<h2>Hello world</h2>',
-//                    'toggleButton' => [
-//                        'label' => 'Добавить узел',
-//                        'tag' => 'button',
-//                        'class' => 'btn btn-primary'
-//                    ],
-//                    'footer' => 'Низ окна',
-//                ]);
-//
-//                echo 'Say hello...';
-//
-//                Modal::end();
-//                ?>
-<!--            </div>-->

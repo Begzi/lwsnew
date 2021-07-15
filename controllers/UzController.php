@@ -37,7 +37,7 @@ class UzController extends Controller
             $uz->customer_id = $customer_id;
             $uz->type_id = $model->type_id;
             $uz->net_id = $model->net_id;
-            $uz->supply_time = $model->supply_time;
+            $uz->supply_time = strval($model->supply_time);
             $uz->save();
 
 
@@ -58,6 +58,61 @@ class UzController extends Controller
             'model' => $model,
             'type' => $type,
             'net' => $net
+        ]);
+    }
+    public function actionEdit($id)
+    {
+//        if (Yii::$app->user->identity->username != 'admin') {
+//            return $this->actionError();
+//        }
+        $model = new UzForm();
+
+        $uz = Uzs::findOne($id);
+        if ($model->load(Yii::$app->request->post())) {
+
+            Yii::$app->session->setFlash('uzlistFormSubmitted');
+//            $customers = Customers::find()->all();
+//            for ($i = 0; $i < count($customers); $i++) {
+//                if ($customers[$i]['name'] == $model->name && $customers[$i]['brand'] == $model->brand) {
+//                    $cumstomer->number = $customers[$i]['number'] + 1;
+//                    $cumstomer->name = $customers[$i]['name'];
+//                    $cumstomer->brand = $customers[$i]['brand'];
+//                    $cumstomer[$i]->delete();
+//                    $cumstomer->save();
+//                    return $this->refresh();
+//                }
+//            }
+            $uz->type_id = $model->type_id;
+            $uz->net_id = $model->net_id;
+            $uz->supply_time = strval($model->supply_time);
+            if (date('m-d', strtotime(strval($model->supply_time))) == '01-01'){
+                $uz->supply_ex_time = date('Y-m-d', strtotime(''.strval($model->supply_time).'+1 year - 1 day'));
+            }
+            else {
+                $uz->supply_ex_time = date('Y-m-d', strtotime(''.strval($model->supply_time).'+1 year'));
+            }
+            $uz->description = $model->description;
+            $uz->save();
+
+
+
+            return $this->redirect(array('customers/view', 'id'=>$uz->customers->id));
+        }
+        $query = UzType::find()->all();
+        $type=Array();
+        for ($i=0; $i < count($query); $i++){
+            array_push($type,$query[$i]->name);
+        }
+        $query = UzNet::find()->all();
+        $net=Array();
+        for ($i=0; $i < count($query); $i++){
+            array_push($net,$query[$i]->name);
+        }
+        return $this->render('edit', [
+            'model' => $model,
+            'type' => $type,
+            'net' => $net,
+            'uz' => $uz
         ]);
     }
     public function actionManyadd($customer_id)

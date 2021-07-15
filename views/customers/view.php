@@ -149,6 +149,8 @@ use yii\bootstrap\ActiveForm;
                     </a>
                     <h4><span>net_id: <?php echo $realuzs[$k][$i]->uznet->num; ?></span></h4>
                     <h4><span>support_a: <?php echo $realuzs[$k][$i]->actualcert->ex_date; ?></span></h4>
+
+                    <h4><span>supply_time: <?php echo $realuzs[$k][$i]->supply_ex_time; ?></span></h4>
                     <p type="text" id="uz_description">
                         <?
                         if ( $realuzs[$k][$i]->description == NULL){
@@ -162,7 +164,7 @@ use yii\bootstrap\ActiveForm;
                 </div>
 
                 <div class="col-md-4 col-md-offset-4-xs-8">
-                    <?= Html::a('Удалить узел', ['/uz/delete', 'id' => $realuzs[$k][$i]->id], ['class'=>'btn btn-primary']) ?>
+                    <?= Html::a('Изменить узел', ['/uz/edit', 'id' => $realuzs[$k][$i]->id], ['class'=>'btn btn-primary']) ?>
 
                 </div>
             <?php endfor;?>
