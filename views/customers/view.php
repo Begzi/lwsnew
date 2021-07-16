@@ -139,7 +139,8 @@ use yii\bootstrap\ActiveForm;
 
                         <div class="normal_mode_labels">
                             <button class="accordion">Узлов <?php echo count($realuzs[$k]) .' '.
-                                    $realuzs[$k][0]->uztype->name . ' ' . $date_check[$k];?> </button>
+                                    $realuzs[$k][0]->uztype->name . ' ' . $date_check[$k];?> <span class="glyphicon glyphicon-asterisk" style="color: red;
+                                     position: absolute; right: 30px;"></span> </button>
                             <div class="panel">
 
             <?php for ($i = 0; $i < count($realuzs[$k]); $i++):?>
@@ -150,7 +151,7 @@ use yii\bootstrap\ActiveForm;
                     <h4><span>net_id: <?php echo $realuzs[$k][$i]->uznet->num; ?></span></h4>
                     <h4><span>support_a: <?php echo $realuzs[$k][$i]->actualcert->ex_date; ?></span></h4>
 
-                    <h4><span>supply_time: <?php echo $realuzs[$k][$i]->supply_ex_time; ?></span></h4>
+                    <h4><span>supply_time: <?php echo $realuzs[$k][$i]->supply_time; ?></span></h4>
                     <p type="text" id="uz_description">
                         <?
                         if ( $realuzs[$k][$i]->description == NULL){

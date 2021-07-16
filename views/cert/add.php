@@ -6,6 +6,7 @@
 
 use app\models\CertForm;
 use yii\helpers\Html;
+use kartik\date\DatePicker;
 use yii\bootstrap\ActiveForm;
 use wbraganca\dynamicform\DynamicFormWidget;
 $this->title = 'Uzs ADD';
@@ -35,7 +36,19 @@ $tmp=Array();
 
                 <?= $form->field($model, 'num')->textInput(['autofocus' => true])  ?>
 
-                <?= $form->field($model, 'st_date')->textInput(['autofocus' => true]) ?>
+                <?= $form->field($model, 'st_date')->widget(DatePicker::className(),[
+                    'name' => 'dp_1',
+                    'type' => DatePicker::TYPE_INPUT,
+                    'options' => ['placeholder' => 'Ввод даты...'],
+                    'convertFormat' => true,
+                    'pluginOptions' => [
+                        'format' => 'yyyy-MM-dd',
+                        'autoclose'=>true,
+                        'weekStart'=>1, //неделя начинается с понедельника
+                        'startDate' => '01.05.2015', //самая ранняя возможная дата
+                        'todayBtn'=>true, //снизу кнопка "сегодня"
+                    ]
+                ]); ?>
 
                 <?= $form->field($model, 'sc_link')->fileInput(['autofocus' => true]); ?>
 
@@ -52,6 +65,7 @@ $tmp=Array();
 
                 <div class="form-group">
                     <?= Html::submitButton('Add btn', ['class' => 'btn btn-primary', 'name' => 'uzs-add-button']) ?>
+                    <?= Html::a('Отмена', ['/customers/view','id' => $customer_id], ['class'=>'btn btn-primary']) ?>
 
                 </div>
 

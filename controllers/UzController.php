@@ -57,7 +57,8 @@ class UzController extends Controller
         return $this->render('add', [
             'model' => $model,
             'type' => $type,
-            'net' => $net
+            'net' => $net,
+            'customer_id' => $customer_id
         ]);
     }
     public function actionEdit($id)
@@ -153,7 +154,8 @@ class UzController extends Controller
         return $this->render('manyadd', [
             'model' => $model,
             'type' => $type,
-            'net' => $net
+            'net' => $net,
+            'customer_id' => $customer_id
         ]);
     }
     public function actionDelete($id){

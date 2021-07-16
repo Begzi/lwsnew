@@ -95,13 +95,9 @@ class CustomersController extends Controller{
             && ($date_k < count($realuzs[$i])))
             {
                 for ($j = 0; $j < count($realuzs[$i]); $j++) {
-                    $check_tmp =  Yii::$app->formatter->asDate( $realuzs[$i][$j]->actualcert->ex_date);
+                    $check_tmp =  Yii::$app->formatter->asDate( $realuzs[$i][$j]->supply_time);
                     if ($check_tmp) {
-                        if (strtotime($date) < strtotime( $check_tmp)) {
-                            $date_k++;
-                        }
-                        elseif (strtotime( Yii::$app->formatter->asDate( $realuzs[$i][$j]->supply_ex_time)) >
-                            strtotime($date)){
+                        if (strtotime($check_tmp) > strtotime($date)){
                             $date_l++;
                         }
                     }
@@ -125,6 +121,7 @@ class CustomersController extends Controller{
                 }
             }
             $date_k = 0;
+            $date_l = 0;
 
 
         }

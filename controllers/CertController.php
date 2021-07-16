@@ -67,6 +67,7 @@ class CertController extends Controller
             'model' => $model,
             'customer_id' => $customer_id,
             'uzs' => $uzs,
+            'customer_id' => $customer_id
         ]);
     }
 

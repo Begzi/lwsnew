@@ -4,9 +4,10 @@
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model app\models\ContactForm */
 
+use kartik\date\DatePicker;
 use app\models\ContactForm;
 use yii\web\View;
-use app\models\CastomersForm;
+use app\models\UzsForm;
 use yii\bootstrap\Modal;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
@@ -28,7 +29,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <?php endif; ?>
 
-        <?= Html::button('Нажми меня!', ['class' => 'btn btn-primary', 'url'=> 'index']) ?>
         <div class="row">
             <div class="col-lg-5">
 
@@ -42,8 +42,19 @@ $this->params['breadcrumbs'][] = $this->title;
                     ->dropDownList($net);
                 ?>
 
-                <?= $form->field($model, 'support_a')->
-                checkbox();?>
+                <?= $form->field($model, 'supply_time')->widget(DatePicker::className(),[
+                    'name' => 'dp_1',
+                    'type' => DatePicker::TYPE_INPUT,
+                    'options' => ['placeholder' => 'Ввод даты...'],
+                    'convertFormat' => true,
+                    'pluginOptions' => [
+                        'format' => 'yyyy-MM-dd',
+                        'autoclose'=>true,
+                        'weekStart'=>1, //неделя начинается с понедельника
+                        'startDate' => '01.05.2015', //самая ранняя возможная дата
+                        'todayBtn'=>true, //снизу кнопка "сегодня"
+                    ]
+                ]); ?>
 
                 <?= $form->field($model, 'number_for_add')->textInput(['autofocus' => true, 'value' => 1]) ?>
 
@@ -52,6 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <div class="form-group">
                     <?= Html::submitButton('Add btn', ['class' => 'btn btn-primary', 'name' => 'uzs-add-button']) ?>
+                    <?= Html::a('Отмена', ['/customers/view','id' => $customer_id], ['class'=>'btn btn-primary']) ?>
 
                 </div>
 
@@ -63,24 +75,3 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 </div>
 
-
-?>
-
-<!--            <div class="form-group">-->
-<!--                --><?//= Html::submitButton('Add btn', ['class' => 'btn btn-primary', 'name' => 'customers-add-button']) ?>
-<!--                --><?php
-//                Modal::begin([
-//                    'header' => '<h2>Hello world</h2>',
-//                    'toggleButton' => [
-//                        'label' => 'Добавить узел',
-//                        'tag' => 'button',
-//                        'class' => 'btn btn-primary'
-//                    ],
-//                    'footer' => 'Низ окна',
-//                ]);
-//
-//                echo 'Say hello...';
-//
-//                Modal::end();
-//                ?>
-<!--            </div>-->
