@@ -45,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model, 'support_a')->
                 checkbox();?>
 
-                <?= $form->field($model, 'number_for_add')->textInput(['autofocus' => true]) ?>
+                <?= $form->field($model, 'number_for_add')->textInput(['autofocus' => true, 'value' => 1]) ?>
 
 
 

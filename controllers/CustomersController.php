@@ -31,6 +31,7 @@ class CustomersController extends Controller{
 
         $customer = Customers::findOne($id);
         $model = new CustomersForm();
+    // Изменение описания и тип обмена документооборота
         if ($model->load(Yii::$app->request->post())) {
             if ($model->doc_type_id == NULL) {
                 $customer->description = $model->description;
@@ -39,7 +40,6 @@ class CustomersController extends Controller{
                 $customer->doc_type_id = $model->doc_type_id;
                 $customer->save();
             }
-            // после изменения примечания кнопка сохранить отсылает сюда
         }
 
         $customer = Customers::findOne($id);
@@ -79,6 +79,7 @@ class CustomersController extends Controller{
         $date = Yii::$app->formatter->asDate( time());
         $date_check=[];
         $date_k = 0;
+        $date_l = 0;
         for ($i = 0; $i < count($realuzs); $i++) {
             for ($j = 0; $j < count($realuzs[$i]); $j++) {
                 $check_tmp =  Yii::$app->formatter->asDate( $realuzs[$i][$j]->actualcert->ex_date);
@@ -88,12 +89,40 @@ class CustomersController extends Controller{
                     }
                 }
             }
+            if (($realuzs[$i][0]->type_id == 0 or $realuzs[$i][0]->type_id == 2 or $realuzs[$i][0]->type_id == 3 or
+                $realuzs[$i][0]->type_id == 4 or $realuzs[$i][0]->type_id == 9 or $realuzs[$i][0]->type_id == 11 or
+                $realuzs[$i][0]->type_id == 14 or $realuzs[$i][0]->type_id == 15 or $realuzs[$i][0]->type_id == 16)
+            && ($date_k < count($realuzs[$i])))
+            {
+                for ($j = 0; $j < count($realuzs[$i]); $j++) {
+                    $check_tmp =  Yii::$app->formatter->asDate( $realuzs[$i][$j]->actualcert->ex_date);
+                    if ($check_tmp) {
+                        if (strtotime($date) < strtotime( $check_tmp)) {
+                            $date_k++;
+                        }
+                        elseif (strtotime( Yii::$app->formatter->asDate( $realuzs[$i][$j]->supply_ex_time)) >
+                            strtotime($date)){
+                            $date_l++;
+                        }
+                    }
+                }
+            }
             if ($date_k == count($realuzs[$i])) {
                 array_push( $date_check, 'У всех узлов действуюдщие сертификаты');
             } elseif ($date_k == 0) {
-                array_push( $date_check,  'У всех узлов нет действующих сертификатов');
+                if ($date_l > 0){
+                    array_push( $date_check,  'У всех узлов нет сертификатов, но есть на базовой гарантии');
+                }
+                else{
+                    array_push( $date_check,  'У всех узлов нет действующих сертификатов');
+                }
             } else {
-                array_push( $date_check, 'У некоторых узлов нет действующих сертификатов');
+                if ($date_l > 0){
+                    array_push( $date_check, 'У некоторых узлов нет действующих сертификатов, и есть на базовой гарантии');
+                }
+                else{
+                    array_push( $date_check, 'У некоторых узлов нет действующих сертификатов');
+                }
             }
             $date_k = 0;
 
